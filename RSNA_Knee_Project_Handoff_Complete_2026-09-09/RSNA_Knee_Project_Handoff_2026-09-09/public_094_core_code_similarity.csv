@@ -1,0 +1,21 @@
+stage,cohezion_cell,bee_cell,exact_match,similarity_ratio,chars
+DINO setup,4,4,True,1.0,4013
+DINO input discovery/cache,5,5,True,1.0,2443
+DINO headers/laterality,6,6,True,1.0,5360
+DINO slot selection,7,7,True,1.0,739
+DINO slice ordering,8,8,True,1.0,4758
+DINO laterality normalization,9,9,True,1.0,197
+DINO cache build,10,10,True,1.0,3669
+DINO target slot head,11,11,True,1.0,1280
+DINO model wrapper,12,12,True,1.0,1169
+DINO backbone builder,13,13,True,1.0,941
+DINO public member loader/fusion,14,14,True,1.0,18537
+DINO submission writer,18,15,True,1.0,1378
+DINO main,19,17,True,1.0,18
+A5 setup,20,20,True,1.0,1623
+A5 DICOM reader,21,21,True,1.0,4149
+A5 architecture,22,22,True,1.0,17226
+A5 inference,23,23,True,1.0,4594
+A5 blend,24,24,True,1.0,738
+RadImageNet block,25,28,True,1.0,33673
+CoAtNet/Raptor/final fusion,26,32,True,1.0,23800

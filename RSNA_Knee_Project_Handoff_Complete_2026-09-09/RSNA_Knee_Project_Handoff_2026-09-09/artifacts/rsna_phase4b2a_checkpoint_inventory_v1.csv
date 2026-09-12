@@ -1,0 +1,3 @@
+path,filename,suffix,size_mb,inferred_fold,keyword_score
+/kaggle/input/datasets/aymenslimani/result-phase-4-b/phase4b1b_final_resnet18_slicemil_v1_1.pt,phase4b1b_final_resnet18_slicemil_v1_1.pt,.pt,42.74792957305908,,0
+/kaggle/input/datasets/aymenslimani/result-phase-4-b/phase4b1b_selection_best_v1_1.pt,phase4b1b_selection_best_v1_1.pt,.pt,42.74693584442139,,0

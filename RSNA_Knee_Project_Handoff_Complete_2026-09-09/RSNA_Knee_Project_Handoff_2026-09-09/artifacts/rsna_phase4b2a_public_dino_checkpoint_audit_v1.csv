@@ -1,0 +1,1 @@
+fold,path,size_mb,sha256,load_ok,object_type,top_level_keys,n_state_keys,has_uid_metadata,has_fold_metadata,has_optimizer_state,has_vit_signature,has_dino_signature,backbone_hint,pool_hint,provenance_verdict,error

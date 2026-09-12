@@ -1,0 +1,6 @@
+phase,name,type,selection,macro_auc,macro_ap,notes
+4A-1,Rule teacher v0.2,report NLP,mechanical rule audit on 58 gold,0.6871,,Strict AUC 0.6871; broad AUC 0.7080; strict coverage 28.59%; covered balanced accuracy 0.8496; 22 hard errors.
+4A,Rule v0.2 + continuous multilingual E5,report NLP teacher,gold audit only; frozen teacher,0.7606700701,,Best trustworthy report teacher. NLI diagnostic was not used in final fusion.
+4B-1B v1.1,ResNet18 SliceMIL historical baseline,MRI,pseudo fold 0; gold locked,0.7097700187,0.5334,Historical baseline. Used unintended global weight normalization; selection best at epoch 4/4 and therefore right-censored.
+4B-1B v1.2,ResNet18 SliceMIL corrected macro-target loss,MRI,pseudo fold 0; gold locked,0.69935786697,0.52892601229,"Canonical clean loss baseline. Best epoch 8/8, still right-censored."
+4B-2B1,Six-slot 2.5D ResNet18 + target attention,MRI,pseudo fold 0; best epoch 5; gold locked,0.6447290368442214,0.48095712206109026,Selection had a real optimum at epoch 5; final 5-epoch refit completed. Lower pseudo loss did not translate to better gold ranking.

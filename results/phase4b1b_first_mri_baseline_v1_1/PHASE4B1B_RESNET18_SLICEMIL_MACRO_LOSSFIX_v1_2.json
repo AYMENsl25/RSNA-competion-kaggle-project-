@@ -1,0 +1,140 @@
+{
+  "experiment_version": "PHASE4B1B_RESNET18_SLICEMIL_MACRO_LOSSFIX_v1_2",
+  "upstream_pipeline": "PHASE4B1A_MRI_INDEX_ORDER_SELECT_LOADER_QC_v1",
+  "upstream_freeze": "PSEUDO_LABELS_v1_1",
+  "upstream_pipeline_json_sha256": "6fa45c45ced5b0b719ecee64debcaa1819c51319327b4023413813d83a3ee1dc",
+  "study_index_sha256": "ce67dcd7d6b2fb9c23232610839cbe28d62fe179ef50ae2be22895f7437bf341",
+  "series_index_sha256": "e330ea0e5269d57abaf244aade89a2e3535d781e251ed514c7e3ef95e97d849e",
+  "slice_selection_sha256": "8c29fabd0de9be0d989fbb13cc09736d3e32cb4fdb7a6f72a1361ed511ff6950",
+  "scientific_policy": {
+    "gold_used_for_training": false,
+    "gold_used_for_early_stopping": false,
+    "gold_used_for_epoch_selection": false,
+    "selection_metric": "pseudo-validation macro target-normalized study-level weighted soft BCE",
+    "final_refit_on_all_pseudo_train": true,
+    "gold_evaluated_after_training_policy_frozen": true
+  },
+  "dicom_pixel_integrity_policy": {
+    "phase4b1a_pixel_decoding_was_exhaustive": false,
+    "phase4b1a_pixel_decoding_was_sampled": true,
+    "malformed_slice_force_decoding": false,
+    "metadata_reinterpretation": false,
+    "malformed_slice_policy": "skip malformed slice and replace with another frozen Phase-4B-1A slice from the same series when available",
+    "restore_anatomical_order_after_replacement": true,
+    "series_with_zero_decodable_selected_slices": "hard failure",
+    "n_series_with_decode_failure": 2,
+    "n_studies_with_decode_failure": 2
+  },
+  "data": {
+    "pseudo_train_studies": 4341,
+    "gold_eval_studies": 58,
+    "gold_group_locked_non_gold": 6,
+    "split_group_key": "cv_group_id",
+    "n_folds": 5,
+    "selection_fold": 0
+  },
+  "model": {
+    "architecture": "ResNet18 per-slice + masked mean/max MIL",
+    "study_aggregation": "mean series logits within plane, then equal mean across planes",
+    "pretrained_requested": true,
+    "pretrained_loaded_final": true,
+    "dropout": 0.2
+  },
+  "training": {
+    "train_n_slices": 8,
+    "pseudo_val_n_slices": 16,
+    "gold_eval_n_slices": 32,
+    "image_size": 224,
+    "batch_size": 6,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "amp": true,
+    "best_epoch_selected_without_gold": 8,
+    "best_pseudo_val_study_macro_weighted_bce": 0.41634032130241394
+  },
+  "v1_2_correction": {
+    "reason": "v1.1 globally normalized target weights instead of normalizing each target separately before macro averaging",
+    "architecture_changed": false,
+    "supervision_changed": false,
+    "loss_contract": "per-target weighted BCE normalized by that target's active weight sum, then equal mean across 12 targets",
+    "max_selection_epochs": 8,
+    "early_stop_patience": 3,
+    "epoch_selection_right_censored": true
+  },
+  "gold_results": {
+    "macro_roc_auc": 0.6994008394213677,
+    "macro_average_precision": 0.5289070008607522,
+    "per_target": {
+      "ACL": {
+        "roc_auc": 0.8431372549019608,
+        "average_precision": 0.765569651552694,
+        "n_positive": 24
+      },
+      "MCL": {
+        "roc_auc": 0.6145124716553287,
+        "average_precision": 0.22511208716451683,
+        "n_positive": 9
+      },
+      "Medial Meniscus": {
+        "roc_auc": 0.6213942307692307,
+        "average_precision": 0.6120017277875242,
+        "n_positive": 26
+      },
+      "Lateral Meniscus": {
+        "roc_auc": 0.631055900621118,
+        "average_precision": 0.46985589951898815,
+        "n_positive": 23
+      },
+      "Medial OA": {
+        "roc_auc": 0.7178294573643411,
+        "average_precision": 0.40773047379922633,
+        "n_positive": 15
+      },
+      "Lateral OA": {
+        "roc_auc": 0.7756286266924565,
+        "average_precision": 0.3568684367893854,
+        "n_positive": 11
+      },
+      "PF OA": {
+        "roc_auc": 0.7464607464607463,
+        "average_precision": 0.5677113743793192,
+        "n_positive": 21
+      },
+      "Effusion": {
+        "roc_auc": 0.8149068322981368,
+        "average_precision": 0.8690508785233989,
+        "n_positive": 35
+      },
+      "Synovitis": {
+        "roc_auc": 0.7096774193548387,
+        "average_precision": 0.6101838924676468,
+        "n_positive": 27
+      },
+      "Baker's": {
+        "roc_auc": 0.6557971014492753,
+        "average_precision": 0.5122288601835593,
+        "n_positive": 12
+      },
+      "Contusion": {
+        "roc_auc": 0.6221322537112011,
+        "average_precision": 0.4802886599197457,
+        "n_positive": 19
+      },
+      "Fracture": {
+        "roc_auc": 0.6402777777777777,
+        "average_precision": 0.470282068243021,
+        "n_positive": 18
+      }
+    }
+  },
+  "outputs": {
+    "rsna_phase4b1b_pseudo_fold_assignments_v1_2.csv": "79982d54dac73dcfa52420bf7d52017e482eab83c49858c47b4dc9a1b8d6acf6",
+    "rsna_phase4b1b_selection_history_v1_2.csv": "9afa160872fb7c2bdd867dce46a6103cf77f1e4eb08873e8554c02d923edcede",
+    "rsna_phase4b1b_final_refit_history_v1_2.csv": "f36ddf07b434f1ebee04068c27844772a9e86f04cac49ac16fd0f7903a3df9d1",
+    "phase4b1b_selection_best_v1_2.pt": "c4bea09b1e054dd22f5cf0abc80b72617eb9e5cc32ae1f10ce540b96e22863ba",
+    "phase4b1b_final_resnet18_slicemil_v1_2.pt": "fa6e9206ae2571a77db7a13ee0903d8a65df8f278145dae676af52d84f074c83",
+    "rsna_phase4b1b_gold_predictions_v1_2.csv": "dd06d129f71c84caf40fd35708d7e5886f159e5ef644a8200a71df0e71889bb9",
+    "rsna_phase4b1b_gold_metrics_v1_2.csv": "d94bffe599ffa94c887181ff9b4add95b0ecf0dfde23c5bd03f3a3c2b3910c4e",
+    "rsna_phase4b1b_dicom_decode_audit_v1_2.csv": "eed590b9e27fc529dcf6505b06c08907e3039d41190ab6e4d91dcfa4dce10332"
+  }
+}

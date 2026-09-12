@@ -1,0 +1,11 @@
+metric,value
+text_mode,tfidf_svd
+image_mode,fallback_pca
+paired_studies,4407
+neighbor_jaccard_mean,0.021012791280469845
+neighbor_jaccard_random,0.001283647547928761
+cca_matched_mean,0.5310115633143928
+cca_permuted_mean,0.012709403406214794
+image_knn_macro_auc_gold,0.5635314111126377
+text_knn_macro_auc_gold,0.5620728922507853
+combined_knn_macro_auc_gold,0.5516230347195976

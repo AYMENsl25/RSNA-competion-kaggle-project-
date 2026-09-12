@@ -1,0 +1,167 @@
+{
+  "project": "RSNA Knee Abnormality Detection 2026 Kaggle",
+  "date": "2026-09-09",
+  "metric": "macro ROC-AUC across 12 findings",
+  "targets": [
+    "ACL",
+    "MCL",
+    "Medial Meniscus",
+    "Lateral Meniscus",
+    "Medial OA",
+    "Lateral OA",
+    "PF OA",
+    "Effusion",
+    "Synovitis",
+    "Baker's",
+    "Contusion",
+    "Fracture"
+  ],
+  "dataset": {
+    "train_studies": 4407,
+    "official_gold_studies": 58,
+    "initially_unlabeled_reports": 4349,
+    "eligible_after_special_exclusions": 4405,
+    "pseudo_train": 4341,
+    "gold_eval_locked": 58,
+    "gold_group_locked_non_gold": 6,
+    "group_key": "cv_group_id"
+  },
+  "report_teacher": {
+    "rule_freeze": "PHASE4A1_RULE_TEACHER_v0_2_MECHANICAL_FIX",
+    "rule_sha256": "10bb470b6473db508b660b22fe0cdbb3b4489487ef1f36bbcf55bf310ff6294f",
+    "rule_expert_freeze": "RULE_EXPERT_FREEZE_v1",
+    "best_teacher": "Frozen Rule v0.2 + continuous multilingual E5",
+    "gold_macro_auc": 0.7606700701,
+    "nli_role": "diagnostic only; not in final pseudo-label fusion"
+  },
+  "pseudo_labels": {
+    "freeze": "PSEUDO_LABELS_v1_1",
+    "rule_positive_target": 0.95,
+    "rule_negative_target": 0.05,
+    "rule_weight": 1.0,
+    "e5_weight_formula": "0.35 * (2 * abs(p - 0.5))",
+    "loss": "per-target weighted BCE normalized by active weight sum, then equal mean over 12 targets"
+  },
+  "mri_best_observed_clean_auc": {
+    "model": "ResNet18 SliceMIL v1.1 historical",
+    "auc": 0.7097700187,
+    "caveat": "unintended global target-weight normalization"
+  },
+  "mri_canonical_clean_baseline": {
+    "model": "ResNet18 SliceMIL v1.2 corrected",
+    "auc": 0.69935786697,
+    "ap": 0.52892601229
+  },
+  "latest_completed_experiment": {
+    "phase": "4B-2B1",
+    "model": "Six-slot 2.5D ResNet18 + target-specific attention",
+    "best_selection_epoch": 5,
+    "best_pseudo_val_loss": 0.4533692995707194,
+    "gold_macro_auc": 0.6447290368442214,
+    "gold_macro_ap": 0.48095712206109026,
+    "conclusion": "mechanically successful but worse gold generalization; do not use alone as primary submission"
+  },
+  "phase4b2a": {
+    "crop_mm": 130.0,
+    "slot_series": 21334,
+    "physical_metadata_valid_fraction": 1.0,
+    "crop_fit_fraction": 0.9977969438455049,
+    "crop_fail_count": 47,
+    "slot_coverage": [
+      {
+        "slot": "SAG_FS",
+        "n_studies_present": 4150,
+        "fraction_studies_present": 0.9416836850465168
+      },
+      {
+        "slot": "SAG_NONFS",
+        "n_studies_present": 4266,
+        "fraction_studies_present": 0.968005445881552
+      },
+      {
+        "slot": "COR_FS",
+        "n_studies_present": 4248,
+        "fraction_studies_present": 0.9639210347174948
+      },
+      {
+        "slot": "COR_NONFS",
+        "n_studies_present": 3406,
+        "fraction_studies_present": 0.7728613569321534
+      },
+      {
+        "slot": "AX_FS",
+        "n_studies_present": 4407,
+        "fraction_studies_present": 1.0
+      },
+      {
+        "slot": "AX_NONFS",
+        "n_studies_present": 857,
+        "fraction_studies_present": 0.1944633537553891
+      }
+    ],
+    "slice_feasibility": [
+      {
+        "slot": "AX_FS",
+        "n_slot_series": 4407,
+        "median_readable": 32.0,
+        "median_band_count": 26.0,
+        "fraction_has_16_in_band": 0.9521216246879964
+      },
+      {
+        "slot": "AX_NONFS",
+        "n_slot_series": 857,
+        "median_readable": 34.0,
+        "median_band_count": 28.0,
+        "fraction_has_16_in_band": 0.9953325554259044
+      },
+      {
+        "slot": "COR_FS",
+        "n_slot_series": 4248,
+        "median_readable": 30.0,
+        "median_band_count": 24.0,
+        "fraction_has_16_in_band": 0.8954802259887006
+      },
+      {
+        "slot": "COR_NONFS",
+        "n_slot_series": 3406,
+        "median_readable": 30.0,
+        "median_band_count": 24.0,
+        "fraction_has_16_in_band": 0.8690546095126248
+      },
+      {
+        "slot": "SAG_FS",
+        "n_slot_series": 4150,
+        "median_readable": 30.0,
+        "median_band_count": 24.0,
+        "fraction_has_16_in_band": 0.9301204819277108
+      },
+      {
+        "slot": "SAG_NONFS",
+        "n_slot_series": 4266,
+        "median_readable": 30.0,
+        "median_band_count": 24.0,
+        "fraction_has_16_in_band": 0.977262072198781
+      }
+    ]
+  },
+  "public_094_notebooks": {
+    "important_finding": "not independent solutions; main source prediction stages are exact code matches",
+    "bee_claim": "faithfully reproduces Mattia Angeli public V27, whose source displayed 0.940",
+    "public_notebook_hashes": {
+      "cohezion-rsna-knee-sota-ensemble.ipynb": "5daf4ef876b94692b98ec5f54395e125d4c8456cfea29635b2c03f3f8bd743fb",
+      "the-bee-s-knees-final-rsna-push.ipynb": "48679822b130cd8882b608123814b417bc5690596341d23efede0c5cf86bb1c8"
+    },
+    "main_stage_exact_matches": 20,
+    "main_stage_count_compared": 20
+  },
+  "next_priority": [
+    "Reproduce the public 0.940 pipeline as a leaderboard benchmark if desired/allowed.",
+    "Build sequence-aware slot v2 using fluid/T1 semantics rather than plane×FS only.",
+    "Add deterministic laterality normalization.",
+    "Use a strong SSL backbone (DINOv3 or DINOv2) while freezing most of the encoder first.",
+    "Use dense multi-window inference and OOF rank ensembles.",
+    "Add RadImageNet/CoAtNet diversity only after single-family validation.",
+    "Improve weak supervision using teacher-disagreement/uncertainty-aware weighting.",
+    "After all choices are frozen, consider a submission-only refit that includes the 58 official gold labels without reusing them for model selection."
+  ]
+}
