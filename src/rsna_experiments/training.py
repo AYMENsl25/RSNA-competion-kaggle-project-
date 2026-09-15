@@ -108,7 +108,17 @@ def run_training(cfg):
     cache = Path(cfg['cache_dir'])
     meta = json.loads((cache/'cache_meta.json').read_text())
     if not meta['complete'] or meta.get('config', {}).get('max_studies', 0) > 0:
-        raise ValueError('Incomplete cache: fix decoding failures before comparing experiments.')
+        counts = meta.get('counts', {})
+        if meta.get('config', {}).get('max_studies', 0) > 0 or counts.get('unprocessed', 0):
+            raise ValueError(
+                'This is a preprocessing PILOT/truncated cache and cannot be trained. '
+                'Rerun notebook 02 with PILOT=False, Save & Run All, and attach that full output. '
+                f"Processed={counts.get('processed', '?')}, unprocessed={counts.get('unprocessed', '?')}."
+            )
+        raise ValueError(
+            'Incomplete cache: inspect cache_audit.json and decode_errors.csv, fix the failures, '
+            'then rebuild the full cache before training.'
+        )
     frame = pd.read_csv(cache/'cache_manifest.csv', dtype={UID: str, 'group': str})
     index = pd.read_csv(cache/'cache_index.csv', dtype={UID: str})
     if sha256(cache/'cache_manifest.csv') != meta['manifest_sha256'] or sha256(cache/'cache_index.csv') != meta['index_sha256']:
