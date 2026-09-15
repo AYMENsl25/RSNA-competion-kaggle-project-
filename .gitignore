@@ -1,0 +1,8 @@
+# Local validation runtime and Python caches only; existing research assets stay tracked.
+.venv-v2/
+__pycache__/
+.pytest_cache/
+pytest-cache-files-*/
+*.pyc
+.ipynb_checkpoints/
+.v2-test-output/
