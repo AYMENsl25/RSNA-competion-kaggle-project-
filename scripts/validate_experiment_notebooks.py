@@ -9,6 +9,9 @@ EXPECTED = [
     '01_Experiment_Readiness.ipynb',
     '02_Preprocessing_Experiments.ipynb',
     '03_Training_Experiments.ipynb',
+    '04_Full_Cohort_Readiness.ipynb',
+    '05_Full_Cohort_Preprocessing.ipynb',
+    '06_Long_Attention_Training_and_Evaluation.ipynb',
 ]
 
 
