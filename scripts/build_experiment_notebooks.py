@@ -139,7 +139,7 @@ def main():
             from rsna_experiments.registry import EXPERIMENTS, experiment
             display(pd.DataFrame([{'experiment':name, 'changes':str(values)} for name,values in EXPERIMENTS.items()]))
             RUN_TRAINING = True  # False for comparison-only session; set RUN_DIRS in the final cell
-            EXPERIMENT = 'r00_resnet_control'
+            EXPERIMENT = 'h04_200epoch_early_stop'  # 200 maximum; stops after 12 unimproved validation epochs
             CACHE_META_PATH = None
             WEIGHTS_PATH = None  # offline: copied resnet18_imagenet.pth or dinov2_vits14_timm.pth path
             ALLOW_WEIGHT_DOWNLOADS = True  # ResNet18 only; generic ImageNet weights, no competition model
