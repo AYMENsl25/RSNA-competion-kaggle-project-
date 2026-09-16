@@ -6,3 +6,6 @@ pytest-cache-files-*/
 *.pyc
 .ipynb_checkpoints/
 .v2-test-output/
+# Downloaded Kaggle outputs and MRI caches stay local.
+results/
+*.zip
