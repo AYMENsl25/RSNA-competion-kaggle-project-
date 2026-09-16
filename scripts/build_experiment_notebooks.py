@@ -185,6 +185,119 @@ def main():
                 print('Comparison skipped: set RUN_DIRS to at least two matched experiment output folders.')
         ''')], training=True)
 
+    notebook('04_Full_Cohort_Readiness.ipynb', '04 — Full cohort, confirmation fold',
+        'CPU. Attach the saved fresh preparation output containing fresh_manifest.csv. '
+        'Use all eligible studies, with source fold 1 held out for confirmation. '
+        'The earlier 752-study cache is a screening cohort and is not an input here.', [
+        code('''
+            FRESH_MANIFEST_PATH = None  # copy the exact Kaggle input path if several copies exist
+            from rsna_experiments.preparation import prepare
+            PREP = prepare({'manifest_path': str(locate('fresh_manifest.csv', override=FRESH_MANIFEST_PATH)),
+                            'out_dir': '/kaggle/working/rsna_full_fold1_preparation',
+                            'fold': 1, 'max_train': 0, 'max_val': 0, 'seed': 42})
+            meta = json.loads((PREP/'preparation_meta.json').read_text())
+            assert meta['selection']['max_train'] == meta['selection']['max_val'] == 0
+            assert meta['fold'] == 1
+            assert meta['train_rows'] + meta['validation_rows'] == meta['source_rows']
+            coverage = pd.DataFrame(meta['target_fold_counts'])
+            validation_coverage = coverage[coverage.fold.eq(1)].copy()
+            display(validation_coverage[['target','positive','negative','unknown']])
+            if (validation_coverage[['positive','negative']] == 0).any().any():
+                raise ValueError('A source validation target lacks a positive or negative; review labels/fold before training.')
+            print('Sparse targets (<10 examples of either class):',
+                  validation_coverage.loc[validation_coverage[['positive','negative']].min(axis=1).lt(10),
+                                          'target'].tolist())
+            print('Studies:', meta['train_rows'], 'train,', meta['validation_rows'], 'validation')
+            print('Grouping:', meta['grouping_method'], 'Warnings:', meta['warnings'])
+            print('Save this output:', PREP)
+        '''),
+        nbf.v4.new_markdown_cell('The labels are report-derived. In the current source audit, fold 1 '
+            'has only two MCL negatives and two synovitis negatives. AUC is defined but highly unstable '
+            'for those targets. Review target/status samples and grouping before interpreting scores.')])
+
+    notebook('05_Full_Cohort_Preprocessing.ipynb', '05 — Full cohort MRI cache',
+        'CPU. Attach the RSNA competition dataset and the saved output of notebook 04. '
+        'This builds a new p0 cache for every selected study and can take substantially longer '
+        'than the 752-study screening cache. Inspect failed decoding before training.', [
+        code('''
+            MANIFEST_PATH = None  # exact path to notebook 04 experiment_manifest.csv if needed
+            from rsna_experiments.preprocessing import build_cache
+            CACHE = build_cache({'comp_dir': str(competition_path()),
+                                 'manifest_path': str(locate('experiment_manifest.csv', override=MANIFEST_PATH)),
+                                 'out_dir': '/kaggle/working/rsna_full_fold1_p0_cache',
+                                 'recipe': 'p0', 'slices': 16, 'size': 192,
+                                 'max_studies': 0, 'max_cache_gb': 15})
+            receipt = json.loads((CACHE/'cache_meta.json').read_text())
+            print('Counts:', receipt['counts'], 'seconds:', receipt['seconds'])
+            print('Cache ID:', receipt['cache_id'], 'cohort:', receipt['cohort_id'])
+            if not receipt['complete'] or receipt['counts']['failed']:
+                raise ValueError('Full cache incomplete. Inspect cache_audit.json and decode_errors.csv.')
+            if receipt['fold'] != 1 or receipt['counts']['studies'] <= 752:
+                raise ValueError('Expected the full fold-1 cohort; check the attached preparation output.')
+            print('Save this complete output:', CACHE)
+        ''')])
+
+    notebook('06_Long_Attention_Training_and_Evaluation.ipynb', '06 — Long training and confirmation evaluation',
+        'GPU. Attach only the complete cache from notebook 05. Train the previously selected '
+        'attention model with a 200-epoch ceiling and early stopping. Run the same configuration '
+        'with r00_resnet_control for a matched full-cohort control. Results are report-label '
+        'validation, not a competition score or clinical validation.', [
+        code('''
+            from rsna_experiments.registry import experiment
+            RUN_TRAINING = True  # False for a comparison-only session with saved long-run outputs
+            EXPERIMENT = 'r01_target_attention'  # separate later run: 'r00_resnet_control'
+            CACHE_META_PATH = None  # exact notebook 05 cache_meta.json path if several are attached
+            WEIGHTS_PATH = None  # standard torchvision ResNet18 state dict when offline
+            ALLOW_WEIGHT_DOWNLOADS = True
+            RESUME_PATH = None  # matching last.pt only; changing this configuration is not a resume
+            if RUN_TRAINING:
+                meta_path = locate('cache_meta.json', override=CACHE_META_PATH)
+                cache_meta = json.loads(meta_path.read_text())
+                if not cache_meta['complete'] or cache_meta['fold'] != 1:
+                    raise ValueError('Attach the completed fold-1 full cache from notebook 05.')
+                if cache_meta['counts']['studies'] <= 752 or cache_meta['counts']['failed']:
+                    raise ValueError('This is not the complete full-cohort cache.')
+                CONFIG = experiment(EXPERIMENT, cache_dir=str(meta_path.parent),
+                    out_dir=f'/kaggle/working/rsna_full_fold1_{EXPERIMENT}_long_v1',
+                    epochs=200, min_epochs=12, patience=12, selection='macro_bce',
+                    weights_path=WEIGHTS_PATH, allow_downloads=ALLOW_WEIGHT_DOWNLOADS,
+                    resume_path=RESUME_PATH)
+                print('Training configuration:', json.dumps(CONFIG, indent=2))
+                print('Full cohort:', cache_meta['counts'])
+        '''),
+        code('''
+            from rsna_experiments.training import run_training
+            if RUN_TRAINING:
+                RUN = run_training(CONFIG)
+                summary = json.loads((RUN/'run_summary.json').read_text())
+                print('Best epoch:', summary['best_epoch'])
+                print('Metrics:', {key: summary['metrics'][key] for key in
+                       ['macro_auc','n_auc_targets','macro_ap','macro_bce','macro_brier',
+                        'constant_macro_bce','delta_vs_constant']})
+                display(pd.read_csv(RUN/'history.csv').tail(20))
+                display(pd.read_csv(RUN/'target_metrics.csv'))
+                print('Save the complete output:', RUN)
+        '''),
+        nbf.v4.new_markdown_cell('For a matched control, save this run, set '
+            '`EXPERIMENT = "r00_resnet_control"`, rerun the configuration and training cells, '
+            'and save that output separately. The fold, cache, seed, weights, epoch ceiling '
+            'and early stopping settings must remain the same. Compare saved runs only after '
+            'checking validation identifiers and per-target class counts.'),
+        code('''
+            RUN_DIRS = []  # exact saved full-cohort run directories; control first
+            if len(RUN_DIRS) >= 2:
+                from rsna_experiments.comparison import compare_runs
+                COMPARISON = compare_runs(RUN_DIRS,
+                    '/kaggle/working/rsna_full_fold1_long_comparison', bootstrap=1000)
+                receipt = json.loads((COMPARISON/'comparison.json').read_text())
+                print('Comparison:', COMPARISON)
+                print('Eligible AUC targets:', len(receipt['eligible_auc_targets']), '/12')
+                display(pd.read_csv(COMPARISON/'summary.csv'))
+                display(pd.read_csv(COMPARISON/'pairwise.csv'))
+            else:
+                print('Attach two full-cohort training outputs and set RUN_DIRS for paired comparison.')
+        ''')], training=True)
+
 
 if __name__ == '__main__':
     main()
