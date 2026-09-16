@@ -9,7 +9,8 @@ import pandas as pd
 import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
-from sklearn.metrics import roc_auc_score, average_precision_score
+from sklearn.metrics import (roc_auc_score, average_precision_score,
+                              brier_score_loss, balanced_accuracy_score, f1_score)
 from .common import UID, TARGETS, YC, WC, fingerprint, sha256, write_json, safe_output, environment
 from .models import StudyModel
 from .losses import MaskedObjective
@@ -63,7 +64,7 @@ def metrics(y, w, p, active, prior=None):
     if not np.isfinite(p).all() or (p < 0).any() or (p > 1).any():
         raise ValueError('Nonfinite or out-of-range predictions')
     p = np.clip(p, 1e-7, 1-1e-7)
-    per_target, bces, aucs = [], [], []
+    per_target, bces, aucs, aps, briers, balanced_accs, f1s = [], [], [], [], [], [], []
     for j, name in enumerate(TARGETS):
         observed = w[:, j] > 0
         binary = observed & np.isin(y[:, j], [0, 1])
@@ -71,15 +72,28 @@ def metrics(y, w, p, active, prior=None):
         bce = float(((-y[:, j]*np.log(p[:, j])-(1-y[:, j])*np.log1p(-p[:, j]))*w[:, j]).sum()/w[:, j].sum()) if active[j] and observed.any() else None
         auc = float(roc_auc_score(y[binary, j], p[binary, j])) if eligible else None
         ap = float(average_precision_score(y[binary, j], p[binary, j])) if eligible else None
+        brier = float(brier_score_loss(y[binary, j], p[binary, j])) if eligible else None
+        balanced_accuracy = (float(balanced_accuracy_score(y[binary, j], p[binary, j] >= 0.5)) if eligible else None)
+        f1 = float(f1_score(y[binary, j], p[binary, j] >= 0.5, zero_division=0)) if eligible else None
         if bce is not None:
             bces.append(bce)
         if auc is not None:
             aucs.append(auc)
+        if ap is not None: aps.append(ap)
+        if brier is not None: briers.append(brier)
+        if balanced_accuracy is not None: balanced_accs.append(balanced_accuracy)
+        if f1 is not None: f1s.append(f1)
         per_target.append(dict(target=name, n_positive=int(((y[:, j] == 1)&observed).sum()),
                                n_negative=int(((y[:, j] == 0)&observed).sum()),
                                n_supervised=int(observed.sum()), train_active=bool(active[j]), bce=bce, auc=auc, ap=ap))
+        per_target[-1].update(brier=brier, balanced_accuracy=balanced_accuracy, f1_at_05=f1)
     result = {'macro_bce': float(np.mean(bces)) if bces else None,
               'macro_auc': float(np.mean(aucs)) if aucs else None,
+              'macro_ap': float(np.mean(aps)) if aps else None,
+              'macro_brier': float(np.mean(briers)) if briers else None,
+              'macro_balanced_accuracy': float(np.mean(balanced_accs)) if balanced_accs else None,
+              'macro_f1_at_05': float(np.mean(f1s)) if f1s else None,
+              'n_metric_targets': len(aucs),
               'eligible_auc_targets': [r['target'] for r in per_target if r['auc'] is not None],
               'n_auc_targets': len(aucs), 'per_target': per_target}
     if prior is not None:
