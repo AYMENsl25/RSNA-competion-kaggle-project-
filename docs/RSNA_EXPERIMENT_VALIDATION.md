@@ -1,6 +1,6 @@
 # RSNA experiment-suite validation
 
-Validation date: 2026-09-15.
+Original validation: 2026-09-15. Full-cohort extension checked: 2026-09-17.
 
 ## Verified locally
 
@@ -12,6 +12,16 @@ Validation date: 2026-09-15.
 - Training checks exercise masked BCE, positive-weight BCE, MONAI focal loss, asymmetric loss, BCE plus ranking, label smoothing, attention/mean-max padding masks, MONAI 3D backward propagation, per-target AUC eligibility, checkpoint output and epoch-boundary resume.
 - Comparison checks exercise aligned validation identities/data, mismatched-cohort rejection, prediction tampering detection, per-target correlations, paired group bootstrap and exploratory equal-probability averaging.
 - The older v2 notebooks still passed their separate syntax/schema/runtime-import validator.
+
+On 2026-09-17, the generator produced all six experiment notebooks and the
+validator passed schema, Python compilation and embedded-runtime imports for all
+six. Focused comparison and preparation tests passed (75 tests). Eight saved
+Kaggle screening ZIPs were compared from their actual validation predictions:
+matching identifiers, labels and groups were required before the paired bootstrap.
+The local comparison receipt is under `results/screening_comparison/`, which remains
+local and is not part of the publishable source repository. The new notebooks 04–06
+have **not** been executed on Kaggle; full-cohort decoding, GPU fit, runtime and
+validation results remain unverified.
 
 These tests use synthetic data. They do not demonstrate real competition DICOM compatibility, GPU memory fit, preprocessing runtime, clinical label correctness, validation improvement or a Kaggle leaderboard score.
 
