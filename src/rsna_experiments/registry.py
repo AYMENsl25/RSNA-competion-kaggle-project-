@@ -24,6 +24,7 @@ EXPERIMENTS = {
     'h01_lower_lr': {'lr': 1e-4, 'encoder_lr': 1e-5},
     'h02_higher_decay': {'weight_decay': 1e-3},
     'h03_longer_budget': {'epochs': 16, 'min_epochs': 8, 'patience': 5},
+    'h04_200epoch_early_stop': {'epochs': 200, 'min_epochs': 8, 'patience': 12},
     'm01_dinov2_frozen': {'model': 'dinov2', 'strategy': 'frozen'},
     'm02_monai_3d': {'model': 'monai3d', 'pretrained': False, 'train_slices': 16},
     's00_tiny_smoke': {'model': 'tiny', 'pretrained': False, 'epochs': 2,
