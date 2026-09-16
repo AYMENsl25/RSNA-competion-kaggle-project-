@@ -9,6 +9,9 @@ This suite builds on the **fresh preparation output**, not the old v1 pseudo-lab
 | `01_Experiment_Readiness.ipynb` | Saved **fresh preparation notebook 01** output containing `fresh_manifest.csv`, `fresh_preparation.json`, preferably `label_audit.csv` | CPU; fold 0; max_train 512, max_val 240 | `rsna_experiment_preparation` |
 | `02_Preprocessing_Experiments.ipynb` | Original **RSNA competition** + saved **experiment readiness 01** output | CPU; `RECIPE='p0'`; run `PILOT=True`, inspect, then `PILOT=False` | `rsna_experiment_p0_cache/p0` |
 | `03_Training_Experiments.ipynb` | Saved **full experiment preprocessing 02** output | GPU; default `EXPERIMENT='r00_resnet_control'`; Internet for setup/weights | `rsna_r00_resnet_control` |
+| `04_Full_Cohort_Readiness.ipynb` | Saved **fresh preparation 01** output with `fresh_manifest.csv` | CPU; source fold 1; all eligible studies | `rsna_full_fold1_preparation` |
+| `05_Full_Cohort_Preprocessing.ipynb` | RSNA competition + saved **04** output | CPU; `p0`, 16 slices, 192 pixels, complete cohort | `rsna_full_fold1_p0_cache/p0` |
+| `06_Long_Attention_Training_and_Evaluation.ipynb` | Saved complete **05** cache | GPU; `r01_target_attention`, 200 maximum epochs, BCE early stopping | `rsna_full_fold1_r01_target_attention_long_v1` |
 
 Paths search `/kaggle/input/datasets/aymenslimani/` and then `/kaggle/input/`, including Kaggle notebook-output mounts. Competition data stays under `/kaggle/input/competitions/rsna-knee-abnormality-detection`. If two differing cache/preparation copies are attached, paste the desired filename's copied Kaggle path in `MANIFEST_PATH` or `CACHE_META_PATH`; ambiguity is an error, not arbitrary selection. The earlier `rsna_fresh_cache` cannot be used by the new training notebook because it contains only one series and a different schema/cohort.
 
@@ -22,7 +25,7 @@ Paths search `/kaggle/input/datasets/aymenslimani/` and then `/kaggle/input/`, i
 4. Run `r00_resnet_control` on GPU first. Then run the matched short screening experiments before `h04_200epoch_early_stop`. The short runs use the same eight-epoch ceiling and early stopping so their differences are easier to attribute. The long run is reserved for the strongest candidate. Generic ImageNet weights download when `ALLOW_WEIGHT_DOWNLOADS=True`. For offline use, attach a standard torchvision ResNet18 state dict and set `WEIGHTS_PATH`; the old MRI-trained `best.pt` is incompatible.
 5. Run `r04_frozen_encoder` on the same full cache. Then use the staged shortlist in the [research review](../../docs/RSNA_EXPERIMENT_RESEARCH.md). Do not run every model × preprocessing × loss combination.
 
-The registry control uses batch size two, accumulation four, eight training/16 validation slice positions, eight epochs maximum, cosine LR and mixed precision on GPU. The notebook selects the new 200-epoch ceiling; early stopping usually ends it sooner, but this is not guaranteed. The cosine schedule spans the selected epoch ceiling, so this run also changes the learning-rate trajectory. Timings and disk estimates are outputs, not promises. If GPU memory is insufficient, lower batch size and adjust accumulation for the desired effective batch; rerun the matched control with that setting. No automatic batch-size reductions silently change an experiment.
+The registry control uses batch size two, accumulation four, eight training/16 validation slice positions, eight epochs maximum, cosine LR and mixed precision on GPU. Notebook 06 explicitly selects a 200-epoch ceiling; early stopping usually ends it sooner, but this is not guaranteed. The cosine schedule spans the selected epoch ceiling, so this run also changes the learning-rate trajectory. Timings and disk estimates are outputs, not promises. If GPU memory is insufficient, lower batch size and adjust accumulation for the desired effective batch; rerun the matched control with that setting. No automatic batch-size reductions silently change an experiment.
 
 ## Which experiment to select
 
@@ -55,6 +58,12 @@ Preprocessing reuses verified per-study NPZs in its output directory. A killed k
 ## Reviewed training-label corrections
 
 Use a separate CSV with columns `StudyInstanceUID,target,label,weight,reviewer,reason`, with exact target names from the notebook and numeric label/weight in [0,1]. Only selected **training** studies may be corrected; duplicate entries, unknown IDs and validation edits are rejected. Attach the CSV, set `CORRECTIONS_PATH` in notebook 01 and a new output directory, then rebuild the prepared output. This is an explicit supervised data change. The suite does not automatically generate a new multilingual teacher or turn unmentioned findings into negatives.
+
+## Full-cohort confirmation round
+
+Use notebooks 04, 05, then 06. Notebook 04 needs the original fresh-manifest output, not the bounded screening preparation. Its `max_train=0` and `max_val=0` settings retain all eligible source studies, with fold 1 as the confirmation split. Notebook 05 needs the RSNA competition files and the saved output of 04. Notebook 06 needs only the complete new cache from 05 and a GPU. Run `r01_target_attention` first; save its full output, then change only `EXPERIMENT` to `r00_resnet_control` and run again as a matched control. For a comparison-only Kaggle session, attach both saved long-run outputs, set `RUN_TRAINING=False`, fill `RUN_DIRS` with the exact directories (control first), and run notebook 06. The cache and GPU are unnecessary in that comparison session.
+
+The existing saved screening cache has 752 studies (512 train, 240 validation). The fresh source manifest has 4,407 studies. Source fold 1 has examples of both classes for all 12 targets, but only two negatives each for MCL and synovitis. Report their individual scores with this support; a 12-target average is mathematically defined but uncertain. Report-derived labels and report-hash grouping do not establish clinical accuracy or patient-independent validation. Review the label audit before making such claims. Local screening ZIPs can be compared with `python scripts/compare_saved_experiment_zips.py`; its output is exploratory and must not be ranked directly against the new cohort.
 
 ## Validation status
 
