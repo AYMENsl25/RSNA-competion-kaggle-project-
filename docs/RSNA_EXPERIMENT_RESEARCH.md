@@ -37,7 +37,7 @@ Every model/loss/hyperparameter comparison first uses the same `p0` cache, cohor
 
 | Family | Selectable settings | Main question |
 |---|---|---|
-| Preprocessing | `p0` full FOV/percentile; `p1` 130-mm crop; `p2` 150-mm crop; `p3` series z-score; `p4` CLAHE; `p5` central slice band | Does physical context, contrast, or depth coverage help? |
+| Preprocessing | `p0` full FOV/percentile; `p1` 130-mm crop; `p2` 150-mm crop; `p3` series z-score; `p4` CLAHE; `p5` central slice band; `p6` laterality canonicalization | Does physical context, contrast, depth coverage, or side normalization help? |
 | Evidence/model | `r00` ResNet18 mean/max; `r01` attention; `r02` sagittal only; `r03` 16 training slices; `m01` frozen DINOv2; `m02` compact MONAI 3D | Is useful information being lost by the representation or pooling? |
 | Strategy | `r04` frozen encoder; `r05` two-epoch frozen warm-up then unfreeze; `r06` shared MONAI intensity augmentation | How much adaptation can the weak labels support? |
 | Loss | BCE control; `l01` capped training-derived positive weights; `l02` focal; `l03` asymmetric; `l04` BCE + .1 pairwise softplus ranking; `l05` .05 label smoothing | Which loss is robust to imbalance and imperfect labels? |
@@ -64,7 +64,7 @@ Run comparisons use identical validation data and group-bootstrap paired differe
 
 ## Deferred research, not claimed implemented
 
-Exact public 0.940 reproduction, six semantic fluid/T1 slots, verified left/right canonicalization, focal patch pooling, isotropic resampling, denoising/bias-field correction, pretrained MedicalNet/RadImageNet/CoAtNet, OOF rank stacking and final competition submission remain separate work. The new preprocessor prefers explicit fluid/FS evidence within three anatomical planes, which is a bounded step toward semantic series selection, not the complete six-slot public recipe. Dice/Tversky losses are not included because this task supplies study labels rather than voxel segmentation masks.
+Exact public 0.940 reproduction, a trained six-slot fluid/T1 model, focal patch pooling, isotropic resampling, denoising/bias-field correction, pretrained MedicalNet/RadImageNet/CoAtNet, OOF rank stacking and final competition submission remain separate work. A header-only six-slot feasibility audit and conservative left/right canonicalization are now implemented as gates; neither is evidence of a score gain. The preprocessor otherwise prefers explicit fluid/FS evidence within three anatomical planes, which is not the complete public ensemble. Dice/Tversky losses are not included because this task supplies study labels rather than voxel segmentation masks.
 
 ## Architecture and acceptance evidence
 

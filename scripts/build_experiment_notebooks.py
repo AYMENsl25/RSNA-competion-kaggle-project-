@@ -7,7 +7,7 @@ import nbformat as nbf
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT/'notebooks'/'experiments'
-MODULES = ['__init__', 'common', 'preparation', 'preprocessing', 'registry', 'models', 'losses', 'training', 'comparison']
+MODULES = ['__init__', 'common', 'preparation', 'preprocessing', 'semantic_audit', 'registry', 'models', 'losses', 'training', 'comparison']
 
 
 def code(text):
@@ -99,7 +99,7 @@ def main():
         'This cache is multi-plane and is different from the earlier single-series 240-study cache.', [
         code('''
             MANIFEST_PATH = None
-            RECIPE = 'p0'  # p0 full FOV; p1 crop130; p2 crop150; p3 zscore; p4 CLAHE; p5 central band
+            RECIPE = 'p0'  # p0 full FOV; p1 crop130; p2 crop150; p3 zscore; p4 CLAHE; p5 central band; p6 laterality
             PILOT = True  # 12-study decoding/timing gate; change False for a trainable full cohort cache
             CONFIG = {'comp_dir': str(competition_path()),
                       'manifest_path': str(locate('experiment_manifest.csv', override=MANIFEST_PATH)),
@@ -183,6 +183,119 @@ def main():
                 print('Saved comparison:', COMPARISON)
             else:
                 print('Comparison skipped: set RUN_DIRS to at least two matched experiment output folders.')
+        ''')], training=True)
+
+    notebook('07_Matched_Long_Run_Comparison.ipynb', '07 — Matched long-run decision gate',
+        'CPU. Attach the saved full-cohort r00 and r01 training outputs. This notebook does no training. '
+        'It rejects mismatched validation cohorts, labels, groups or targets, then computes paired bootstrap '
+        'comparisons. Do not choose a model from screenshots or from peak AUC at an unselected epoch.', [
+        code('''
+            CONTROL_DIR = None  # exact directory containing r00 run_summary.json
+            ATTENTION_DIR = None  # exact directory containing r01 run_summary.json
+            def unique_run(experiment, override=None):
+                if override:
+                    path = Path(override)
+                    if not (path/'run_summary.json').is_file(): raise FileNotFoundError(path/'run_summary.json')
+                    return path
+                hits = []
+                for summary in Path('/kaggle/input').rglob('run_summary.json'):
+                    data = json.loads(summary.read_text())
+                    if data.get('config', {}).get('experiment') == experiment: hits.append(summary.parent)
+                if len(hits) != 1:
+                    raise ValueError(f'Expected exactly one {experiment} output; found {hits}. Set its explicit path.')
+                return hits[0]
+            RUN_DIRS = [unique_run('r00_resnet_control', CONTROL_DIR),
+                        unique_run('r01_target_attention', ATTENTION_DIR)]
+            print('Matched candidates:', RUN_DIRS)
+        '''),
+        code('''
+            from rsna_experiments.comparison import compare_runs
+            COMPARISON = compare_runs(RUN_DIRS, '/kaggle/working/rsna_full_fold1_r00_vs_r01', bootstrap=2000)
+            receipt = json.loads((COMPARISON/'comparison.json').read_text())
+            display(pd.read_csv(COMPARISON/'summary.csv'))
+            display(pd.read_csv(COMPARISON/'pairwise.csv'))
+            print('Eligible AUC targets:', receipt['eligible_auc_targets'])
+            print('Save this decision output:', COMPARISON)
+        ''')], training=True)
+
+    notebook('08_Semantic_Slot_and_Laterality_Audit.ipynb', '08 — Semantic slots and laterality audit',
+        'CPU and header-only. Attach the competition and notebook 04 preparation output. No pixels are decoded. '
+        'This tests whether six conservative protocol slots and reliable laterality exist often enough to justify '
+        'new preprocessing. Missing fat suppression is never called T1.', [
+        code('''
+            MANIFEST_PATH = None
+            from rsna_experiments.semantic_audit import audit
+            AUDIT = audit({'comp_dir': str(competition_path()),
+                           'manifest_path': str(locate('experiment_manifest.csv', override=MANIFEST_PATH)),
+                           'out_dir': '/kaggle/working/rsna_semantic_laterality_audit'})
+            receipt = json.loads((AUDIT/'semantic_audit.json').read_text())
+            assert receipt['complete'] and not receipt['pixel_data_decoded']
+            display(pd.DataFrame([receipt['slot_study_counts']]).T.rename(columns={0:'studies'}))
+            display(pd.DataFrame([receipt['laterality_study_counts']]).T.rename(columns={0:'studies'}))
+            print(receipt['warning'])
+            print('Save this audit output:', AUDIT)
+        '''),
+        nbf.v4.new_markdown_cell('Gate: run the p6 laterality cache only if unresolved/conflicting laterality is acceptably low. '
+            'Do not build a six-slot model until slot coverage is reviewed; this audit intentionally does not invent missing protocols.')])
+
+    notebook('09_Preprocessing_Ablation.ipynb', '09 — One-factor preprocessing ablation',
+        'CPU. Attach the competition and notebook 04 preparation output. Select exactly one candidate. Run the 24-study '
+        'pilot first, inspect failures, then set PILOT=False and save the complete cache. p1 tests physical crop, p5 tests '
+        'slice range, and p6 tests right-knee orientation only.', [
+        code('''
+            MANIFEST_PATH = None
+            RECIPE = 'p1'  # choose ONE: p1 crop130, p5 central band, p6 laterality canonicalization
+            PILOT = True
+            if RECIPE not in {'p1','p5','p6'}: raise ValueError('Use one predeclared ablation: p1, p5 or p6.')
+            from rsna_experiments.preprocessing import build_cache
+            CACHE = build_cache({'comp_dir': str(competition_path()),
+                                 'manifest_path': str(locate('experiment_manifest.csv', override=MANIFEST_PATH)),
+                                 'out_dir': f'/kaggle/working/rsna_full_fold1_{RECIPE}_' + ('pilot' if PILOT else 'cache'),
+                                 'recipe': RECIPE, 'slices': 16, 'size': 192,
+                                 'max_studies': 24 if PILOT else 0, 'max_cache_gb': 15})
+            receipt = json.loads((CACHE/'cache_meta.json').read_text())
+            print('Counts:', receipt['counts'], 'seconds:', receipt['seconds'])
+            if not PILOT and (not receipt['complete'] or receipt['counts']['failed']):
+                raise ValueError('Candidate cache is incomplete; inspect cache_audit.json and decode_errors.csv.')
+            print('Save output:', CACHE)
+        '''),
+        code('''
+            audit = json.loads((CACHE/'cache_audit.json').read_text())
+            errors = [dict(study=row[UID], **error) for row in audit for error in row['errors']]
+            display(pd.DataFrame(errors).head(50))
+            print('Pilot is only a decoding gate. It is not a model comparison.')
+        ''')])
+
+    notebook('10_Matched_Ablation_Training.ipynb', '10 — Matched preprocessing training',
+        'GPU. Attach one complete candidate cache from notebook 09. Train the unchanged r00 model with the same fold, '
+        'seed, loss, 200-epoch ceiling, minimum epochs, patience and BCE checkpoint rule as the p0 control. '
+        'One cache per run; never point this notebook at a pilot.', [
+        code('''
+            CACHE_META_PATH = None
+            RECIPE = 'p1'  # must match the attached complete cache
+            if RECIPE not in {'p1','p5','p6'}: raise ValueError(RECIPE)
+            meta_path = locate('cache_meta.json', override=CACHE_META_PATH)
+            cache_meta = json.loads(meta_path.read_text())
+            if (not cache_meta['complete'] or cache_meta['counts']['failed'] or
+                    cache_meta['counts']['studies'] <= 752 or cache_meta['fold'] != 1):
+                raise ValueError('Attach a complete full-cohort fold-1 candidate cache, not a pilot.')
+            if cache_meta['config']['recipe'] != RECIPE:
+                raise ValueError(f"Attached cache is {cache_meta['config']['recipe']}, expected {RECIPE}")
+            from rsna_experiments.registry import experiment
+            CONFIG = experiment('r00_resnet_control', cache_dir=str(meta_path.parent),
+                out_dir=f'/kaggle/working/rsna_full_fold1_r00_{RECIPE}_long_v1',
+                epochs=200, min_epochs=12, patience=12, selection='macro_bce',
+                weights_path=None, allow_downloads=True, resume_path=None)
+            print(json.dumps(CONFIG, indent=2))
+        '''),
+        code('''
+            from rsna_experiments.training import run_training
+            RUN = run_training(CONFIG)
+            summary = json.loads((RUN/'run_summary.json').read_text())
+            print('Selected epoch:', summary['best_epoch'], 'metrics:', summary['metrics'])
+            display(pd.read_csv(RUN/'history.csv').tail(20))
+            display(pd.read_csv(RUN/'target_metrics.csv'))
+            print('Save this output for paired comparison with the p0 r00 control:', RUN)
         ''')], training=True)
 
     notebook('04_Full_Cohort_Readiness.ipynb', '04 — Full cohort, confirmation fold',

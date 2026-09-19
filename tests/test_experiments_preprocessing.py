@@ -56,7 +56,7 @@ def _read(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _series(comp, uid, positions=(4, 0, 2), plane="AX", spacing=(1, 1), shape=(16, 16), description="", series=None):
+def _series(comp, uid, positions=(4, 0, 2), plane="AX", spacing=(1, 1), shape=(16, 16), description="", series=None, laterality="L"):
     series = series or generate_uid()
     folder = comp / "train_series" / uid / series
     folder.mkdir(parents=True)
@@ -72,11 +72,15 @@ def _series(comp, uid, positions=(4, 0, 2), plane="AX", spacing=(1, 1), shape=(1
         ds.StudyInstanceUID, ds.SeriesInstanceUID, ds.FrameOfReferenceUID = uid, series, frame
         ds.ImageOrientationPatient = orientation
         ds.ImagePositionPatient = [position if axis == {"SAG": 0, "COR": 1, "AX": 2}[plane] else 0 for axis in range(3)]
+        if laterality == "R" and plane != "SAG":
+            ds.ImagePositionPatient[0] = -100
         ds.InstanceNumber = 100 - index  # deliberately unrelated to spatial order
         if spacing is not None:
             ds.PixelSpacing = list(spacing)
         ds.Rows, ds.Columns = shape
         ds.SeriesDescription = description
+        if laterality:
+            ds.ImageLaterality = laterality
         ds.SamplesPerPixel, ds.PhotometricInterpretation = 1, "MONOCHROME2"
         ds.BitsAllocated, ds.BitsStored, ds.HighBit, ds.PixelRepresentation = 16, 16, 15, 0
         pixels = (np.indices(shape)[0] + 100 * position).astype(np.uint16)
@@ -183,7 +187,7 @@ def test_recipes_change_one_operation_and_have_separate_directories(prep, case):
         out = prep.build_cache({**cfg, "recipe": recipe})
         assert out.name == recipe and _read(out / "cache_meta.json")["complete"]
         outputs.append(out)
-    assert len(set(outputs)) == 6
+    assert len(set(outputs)) == 7
     assert _read(outputs[0] / "cache_audit.json")[0]["selected"]["AX"]["positions"] != _read(outputs[5] / "cache_audit.json")[0]["selected"]["AX"]["positions"]
 
 
@@ -341,3 +345,30 @@ def test_single_value_localizer_image_type_is_excluded(prep, case):
     out = prep.build_cache(cfg)
     assert not _read(out / "cache_meta.json")["complete"]
     assert "localizer_excluded" in json.dumps(_read(out / "cache_audit.json"))
+
+
+def test_right_knee_canonicalization_is_a_one_factor_flip(prep, case):
+    uid, comp, cfg = case
+    folder = _series(comp, uid, positions=(0,), plane="AX", shape=(16, 16), laterality="R")
+    path = folder / "0.dcm"
+    ds = pydicom.dcmread(path)
+    ds.PixelData = np.tile(np.arange(16, dtype=np.uint16), (16, 1)).tobytes()
+    ds.save_as(path, enforce_file_format=True)
+    p0 = prep.build_cache({**cfg, "recipe": "p0", "out_dir": str(Path(cfg["out_dir"]) / "base")})
+    p6 = prep.build_cache({**cfg, "recipe": "p6", "out_dir": str(Path(cfg["out_dir"]) / "canonical")})
+    with np.load(_archive(p0)) as base, np.load(_archive(p6)) as canonical:
+        assert np.array_equal(canonical["images"][2, 0], base["images"][2, 0, :, ::-1])
+    selected = _read(p6 / "cache_audit.json")[0]["selected"]["AX"]
+    assert selected["laterality"] == "R" and selected["laterality_source"] == "dicom_tag"
+
+
+def test_laterality_recipe_rejects_unresolved_side(prep, case):
+    uid, comp, cfg = case
+    folder = _series(comp, uid, laterality=None)
+    for path in folder.glob("*.dcm"):
+        ds = pydicom.dcmread(path)
+        ds.ImagePositionPatient[0] = -7.5  # image center lies on the midline
+        ds.save_as(path, enforce_file_format=True)
+    out = prep.build_cache({**cfg, "recipe": "p6"})
+    assert not _read(out / "cache_meta.json")["complete"]
+    assert "laterality_unresolved" in json.dumps(_read(out / "cache_audit.json"))

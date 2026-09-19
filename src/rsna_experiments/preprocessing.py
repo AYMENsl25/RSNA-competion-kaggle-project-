@@ -25,15 +25,18 @@ from .common import UID, fingerprint, locate, sha256, write_json
 
 LOG = logging.getLogger(__name__)
 SCHEMA = "rsna-experiments-cache-v1"
-VERSION = "bounded-mri-1"
+VERSION = "bounded-mri-2"
 PLANES = ("SAG", "COR", "AX")
 RECIPES = {
-    "p0": dict(band=(.05, .95), crop_mm=None, normalization="percentile"),
-    "p1": dict(band=(.05, .95), crop_mm=130., normalization="percentile"),
-    "p2": dict(band=(.05, .95), crop_mm=150., normalization="percentile"),
-    "p3": dict(band=(.05, .95), crop_mm=None, normalization="zscore"),
-    "p4": dict(band=(.05, .95), crop_mm=None, normalization="clahe"),
-    "p5": dict(band=(.12, .88), crop_mm=None, normalization="percentile"),
+    "p0": dict(band=(.05, .95), crop_mm=None, normalization="percentile", laterality="none"),
+    "p1": dict(band=(.05, .95), crop_mm=130., normalization="percentile", laterality="none"),
+    "p2": dict(band=(.05, .95), crop_mm=150., normalization="percentile", laterality="none"),
+    "p3": dict(band=(.05, .95), crop_mm=None, normalization="zscore", laterality="none"),
+    "p4": dict(band=(.05, .95), crop_mm=None, normalization="clahe", laterality="none"),
+    "p5": dict(band=(.12, .88), crop_mm=None, normalization="percentile", laterality="none"),
+    # Canonicalize right knees to the left-knee orientation used by the public
+    # reference pipeline. This is deliberately its own one-factor ablation.
+    "p6": dict(band=(.05, .95), crop_mm=None, normalization="percentile", laterality="canonical"),
 }
 
 
@@ -106,6 +109,40 @@ def _semantics(row, ds):
     return plane, (int(fluid and fs), int(fs), int(fluid))
 
 
+def _laterality(records):
+    """Resolve L/R conservatively from tags, then patient-space volume center."""
+    tagged = set()
+    for item in records:
+        for key in ("ImageLaterality", "Laterality"):
+            value = str(getattr(item["ds"], key, "")).strip().upper()
+            if value in {"L", "LEFT"}: tagged.add("L")
+            elif value in {"R", "RIGHT"}: tagged.add("R")
+    if len(tagged) > 1:
+        raise ValueError("conflicting_laterality_tags")
+    centers = []
+    for item in records:
+        spacing = item.get("spacing")
+        if spacing is None:
+            continue
+        rows, columns = item["shape"]
+        axes = item["axes"]
+        center = (item["ipp"] + axes[0] * ((columns - 1) * spacing[1] / 2)
+                  + axes[1] * ((rows - 1) * spacing[0] / 2))
+        centers.append(float(center[0]))
+    geometric = None
+    if centers:
+        x = float(np.median(centers))
+        geometric = "L" if x > 5 else "R" if x < -5 else None
+    tag = next(iter(tagged), None)
+    if tag and geometric and tag != geometric:
+        raise ValueError("laterality_tag_geometry_conflict")
+    if tag:
+        return tag, "dicom_tag"
+    if geometric:
+        return geometric, "patient_geometry"
+    raise ValueError("laterality_unresolved")
+
+
 def _headers(folder, row, uid, series, recipe):
     records = []
     files = sorted(p for p in folder.iterdir() if p.is_file())
@@ -124,7 +161,7 @@ def _headers(folder, row, uid, series, recipe):
         shape = (int(ds.Rows), int(ds.Columns))
         if min(shape) < 1 or max(shape) > 4096 or shape[0] * shape[1] > 4096**2:
             raise ValueError("source_dimensions_out_of_bounds")
-        spacing = _vector(ds, "PixelSpacing", 2) if hasattr(ds, "PixelSpacing") or recipe["crop_mm"] else None
+        spacing = _vector(ds, "PixelSpacing", 2) if hasattr(ds, "PixelSpacing") or recipe["crop_mm"] or recipe["laterality"] == "canonical" else None
         if spacing is not None and (spacing <= 0).any():
             raise ValueError("invalid_PixelSpacing")
         plane, preference = _semantics(row, ds)
@@ -161,6 +198,10 @@ def _headers(folder, row, uid, series, recipe):
         wanted = np.rint(recipe["crop_mm"] / first["spacing"]).astype(int)
         if (wanted < 1).any() or (wanted > first["shape"]).any():
             raise ValueError("physical_crop_exceeds_fov")
+    if recipe["laterality"] == "canonical":
+        laterality, source = _laterality(records)
+        for item in records:
+            item["laterality"], item["laterality_source"] = laterality, source
     return records
 
 
@@ -202,6 +243,12 @@ def _series_stack(records, cfg):
         h, w = np.rint(recipe["crop_mm"] / records[0]["spacing"]).astype(int)
         top, left = (stack.shape[1] - h) // 2, (stack.shape[2] - w) // 2
         stack = stack[:, top:top+h, left:left+w]
+    if recipe["laterality"] == "canonical" and records[0]["laterality"] == "R":
+        if records[0]["plane"] == "SAG":
+            stack = stack[::-1]
+            selected = selected[::-1]
+        else:
+            stack = stack[:, :, ::-1]
     result = np.zeros((cfg["slices"], cfg["size"], cfg["size"]), np.uint8)
     mask = np.zeros(cfg["slices"], bool)
     clahe = None
@@ -276,7 +323,9 @@ def _study(folders, metadata, uid, cfg):
         if plane not in choices:
             continue
         _, series, records = min(choices[plane], key=lambda item: item[0])
-        chosen[plane] = dict(series=series, positions=[], success=False)
+        chosen[plane] = dict(series=series, positions=[], success=False,
+                             laterality=records[0].get("laterality"),
+                             laterality_source=records[0].get("laterality_source"))
         try:
             stack, valid, positions = _series_stack(records, cfg)
             images[slot], mask[slot] = stack, valid
@@ -300,7 +349,7 @@ def build_cache(config) -> Path:
     started = time.monotonic()
     cfg = {key: config.get(key, default) for key, default in dict(recipe="p0", slices=16, size=192, max_studies=0).items()}
     if cfg["recipe"] not in RECIPES:
-        raise ValueError("recipe must be p0 through p5")
+        raise ValueError("recipe must be p0 through p6")
     for key in ("slices", "size", "max_studies"):
         if isinstance(cfg[key], bool) or not isinstance(cfg[key], (int, np.integer)) or cfg[key] < (0 if key == "max_studies" else 1):
             raise ValueError(f"{key} must be a {'nonnegative' if key == 'max_studies' else 'positive'} integer")

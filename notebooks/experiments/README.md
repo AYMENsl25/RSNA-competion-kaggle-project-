@@ -12,6 +12,10 @@ This suite builds on the **fresh preparation output**, not the old v1 pseudo-lab
 | `04_Full_Cohort_Readiness.ipynb` | Saved **fresh preparation 01** output with `fresh_manifest.csv` | CPU; source fold 1; all eligible studies | `rsna_full_fold1_preparation` |
 | `05_Full_Cohort_Preprocessing.ipynb` | RSNA competition + saved **04** output | CPU; `p0`, 16 slices, 192 pixels, complete cohort | `rsna_full_fold1_p0_cache/p0` |
 | `06_Long_Attention_Training_and_Evaluation.ipynb` | Saved complete **05** cache | GPU; `r01_target_attention`, 200 maximum epochs, BCE early stopping | `rsna_full_fold1_r01_target_attention_long_v1` |
+| `07_Matched_Long_Run_Comparison.ipynb` | Saved full-cohort `r00` and `r01` outputs | CPU; no training; 2,000 paired bootstrap samples | `rsna_full_fold1_r00_vs_r01` |
+| `08_Semantic_Slot_and_Laterality_Audit.ipynb` | RSNA competition + saved **04** output | CPU; header-only; no pixel decoding | `rsna_semantic_laterality_audit` |
+| `09_Preprocessing_Ablation.ipynb` | RSNA competition + saved **04** output | CPU; one of `p1`, `p5`, `p6`; pilot then full | one complete candidate cache |
+| `10_Matched_Ablation_Training.ipynb` | One complete **09** candidate cache | GPU; unchanged `r00` long-run configuration | one candidate training output |
 
 Paths search `/kaggle/input/datasets/aymenslimani/` and then `/kaggle/input/`, including Kaggle notebook-output mounts. Competition data stays under `/kaggle/input/competitions/rsna-knee-abnormality-detection`. If two differing cache/preparation copies are attached, paste the desired filename's copied Kaggle path in `MANIFEST_PATH` or `CACHE_META_PATH`; ambiguity is an error, not arbitrary selection. The earlier `rsna_fresh_cache` cannot be used by the new training notebook because it contains only one series and a different schema/cohort.
 
@@ -41,7 +45,7 @@ All 19 named settings are shown in notebook 03 before training. Changes are made
 | `m01_dinov2_frozen`, `m02_monai_3d` | Generic frozen SSL features and small 3D DenseNet |
 | `s00_tiny_smoke` | Two-epoch execution check |
 
-Select `p0`–`p5` in notebook 02 for preprocessing variations. Each is saved independently; rerun the same training control on each. Do not compare runs that silently dropped different failed studies. Three-plane selection is geometry-checked and prefers explicit fluid/FS evidence; it is not a complete six-semantic-slot model. Sagittal-only training refuses a cohort with any missing sagittal series so it cannot gain an advantage by filtering difficult cases.
+Select `p0`–`p6` for preprocessing variations. `p6` is a one-factor laterality canonicalization: right sagittal stacks reverse depth and right coronal/axial stacks flip horizontally. It rejects unresolved or conflicting laterality instead of guessing. Each recipe is saved independently; rerun the same training control on each. Do not compare runs that silently dropped different failed studies. Three-plane selection is geometry-checked and prefers explicit fluid/FS evidence; it is not a complete six-semantic-slot model. Sagittal-only training refuses a cohort with any missing sagittal series so it cannot gain an advantage by filtering difficult cases.
 
 For DINO: set `PREPARE_DINO_WEIGHTS=True` in the optional setup cell with Internet enabled. It saves `generic_weights/dinov2_vits14_timm.pth` and a checksum. Select `m01_dinov2_frozen`; the setup cell assigns the downloaded path in the current run. Offline, attach that saved weight file and set `WEIGHTS_PATH`. The encoder stays frozen but is evaluated each batch: precomputed feature caching is not implemented. The MONAI 3D branch needs 16 depth positions and is randomly initialized; compare against `r03_dense_slices` and treat this as an architecture-family comparison, not a one-parameter change.
 
@@ -64,6 +68,10 @@ Use a separate CSV with columns `StudyInstanceUID,target,label,weight,reviewer,r
 Use notebooks 04, 05, then 06. Notebook 04 needs the original fresh-manifest output, not the bounded screening preparation. Its `max_train=0` and `max_val=0` settings retain all eligible source studies, with fold 1 as the confirmation split. Notebook 05 needs the RSNA competition files and the saved output of 04. Notebook 06 needs only the complete new cache from 05 and a GPU. Run `r01_target_attention` first; save its full output, then change only `EXPERIMENT` to `r00_resnet_control` and run again as a matched control. For a comparison-only Kaggle session, attach both saved long-run outputs, set `RUN_TRAINING=False`, fill `RUN_DIRS` with the exact directories (control first), and run notebook 06. The cache and GPU are unnecessary in that comparison session.
 
 The existing saved screening cache has 752 studies (512 train, 240 validation). The fresh source manifest has 4,407 studies. Source fold 1 has examples of both classes for all 12 targets, but only two negatives each for MCL and synovitis. Report their individual scores with this support; a 12-target average is mathematically defined but uncertain. Report-derived labels and report-hash grouping do not establish clinical accuracy or patient-independent validation. Review the label audit before making such claims. Local screening ZIPs can be compared with `python scripts/compare_saved_experiment_zips.py`; its output is exploratory and must not be ranked directly against the new cohort.
+
+## Next experiment round
+
+Run notebook 07 first and freeze the matched `r00`/`r01` decision. Then run notebook 08. If laterality coverage passes inspection, use notebook 09 for `p1`, `p5`, and `p6` in separate sessions, always pilot before a full cache. Notebook 10 trains only one complete candidate at a time with the unchanged long `r00` control. Compare each candidate against the saved p0 `r00` output; do not combine candidate changes until one has independently passed. The six-slot audit measures feasibility only—the suite does not yet train a six-slot ensemble.
 
 ## Validation status
 
