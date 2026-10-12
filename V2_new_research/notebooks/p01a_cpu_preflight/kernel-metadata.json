@@ -1,0 +1,16 @@
+{
+  "id": "aymenslimani/rsna-knee-v2-p01a-cpu-offline-preflight",
+  "title": "RSNA knee V2 P01A CPU offline preflight",
+  "code_file": "preflight.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "false",
+  "machine_shape": "",
+  "dataset_sources": ["aymenslimani/rsna-v2-official-coatnet0-imagenet1k"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

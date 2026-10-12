@@ -1,0 +1,16 @@
+{
+  "id": "aymenslimani/rsna-knee-v2-m00-input-check",
+  "title": "RSNA knee V2 M00 input check",
+  "code_file": "input_check.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "false",
+  "machine_shape": "",
+  "dataset_sources": ["stevenleehans/rsna-knee-llm-report-labels", "aymenslimani/rsna-knee-v2-frozen-dev-split"],
+  "competition_sources": ["rsna-knee-abnormality-detection"],
+  "kernel_sources": [],
+  "model_sources": []
+}

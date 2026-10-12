@@ -1,5 +1,7 @@
 # Local validation runtime and Python caches only; existing research assets stay tracked.
 .venv-v2/
+.tools/
+.kaggle/
 __pycache__/
 .pytest_cache/
 pytest-cache-files-*/
@@ -9,3 +11,10 @@ pytest-cache-files-*/
 # Downloaded Kaggle outputs and MRI caches stay local.
 results/
 *.zip
+V2_new_research/data/metadata/
+V2_new_research/data/dicom_pilot/
+V2_new_research/.tools/
+V2_new_research/outputs/
+V2_new_research/assets/
+V2_new_research/research/*.json
+V2_new_research/research/*.csv

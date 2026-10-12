@@ -1,0 +1,21 @@
+# Candidate v3: conservative image edge reconciliation
+
+This candidate remains unfrozen and does not authorize training. It preserves the report/patient candidate as a separate artifact and adds every one of the 171 image edges whose private decision is **not** `sampled_slices_dissimilar`, including within-fold edges and the header-only expert-linked edge. The 101 sampled-dissimilar edges are omitted from image grouping as limited negative evidence; they do not establish patient independence. All 1,101 detected near-report edges, exact normalized reports, and census patient hashes remain connected through the same union graph.
+
+Every full combined component touching an expert or existing census exclusion is excluded. The image-only expert component has four studies; its three nonexpert studies are newly excluded. Combined expert components of size four and five are wholly excluded, preserving report transitivity and all 58 experts plus the original four report-linked exclusions. There are 65 excluded studies in 58 components. Expert label cells were inspected only to identify fully labeled UIDs, and all twelve target access policies prohibit training, tuning, checkpoint selection, and value inspection.
+
+The candidate has 3,457 training studies in 3,275 components and 885 validation studies in 843 components (20.38% of 4,342 development studies). The 51-study component is entirely in training; validation's largest component has 14 studies. Under study weighting, Kish effective component counts are 1,512.957 for training and 654.323 for validation; these describe weight concentration and are not a guarantee of biological independence.
+
+Before image reconciliation, unresolved edges crossed train/validation 51 times and crossed any partition 52 times. After reconciliation, both counts are zero. All near-report edges also cross partitions zero times, and combined/report/patient keys are disjoint. UID completeness and all protected exclusions pass.
+
+The existing N01 assertions were reassigned by UID to v3 for aggregate coverage only; no assertions were regenerated or frozen. All 4,342 development UIDs have candidate assertions. Validation's observed positive/negative support exceeds 20 per class only for medial meniscus (85/78), lateral meniscus (50/152), and effusion (36/104). The other nine targets fail that provisional support gate, and assertion validity/manual review remain unresolved. This candidate does not clear the label gate.
+
+Run from repository root:
+
+```powershell
+python V2_new_research/src/research/build_candidate_split.py --train V2_new_research/data/metadata/train.csv --patients V2_new_research/outputs/kaggle_dicom_audit/patient_groups.csv --near-edges V2_new_research/outputs/candidate_split/near_report_edges.csv --image-triage V2_new_research/outputs/image_confirmation_safe/local_candidate_triage.csv --image-pairs V2_new_research/outputs/image_duplicate_audit/near_image_pairs.csv --image-decisions V2_new_research/outputs/image_confirmation_safe/private_candidate_decisions.csv --image-audit-summary V2_new_research/research/image_confirmation_reconciled_summary.json --n01-assertions V2_new_research/outputs/n01/candidate_assertions.csv --output V2_new_research/outputs/candidate_split_v3 --summary V2_new_research/research/candidate_grouped_split_v3_audit.json
+```
+
+The ignored manifest and audit are under `outputs/candidate_split_v3/`. The tracked aggregate `candidate_grouped_split_v3_audit.json` records every input hash, manifest hash, component sizes/placement, partition balance, integrity checks, and N01 support. No report text, image pixels, or expert target values are exported. Manifest SHA-256: `b5926bd9d82154debee602a1824cf874aed1d0f409386308a387ed6a2f49debc`.
+
+Unresolved edges are conservatively grouped, not classified as true duplicates. Template similarity and transitive linkage can overgroup unrelated studies. The near-report candidate index and image screen are incomplete, five-slice quantile comparison is not anatomical registration, and de-identified patient hashes may be study-specific. Conditional Astra support for conservative grouping does not clear the remaining label, runtime, or final freeze gates.
