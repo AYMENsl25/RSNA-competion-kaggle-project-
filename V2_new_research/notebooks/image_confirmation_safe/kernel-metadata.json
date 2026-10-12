@@ -1,0 +1,16 @@
+{
+  "id": "aymenslimani/rsna-knee-bounded-image-confirmation-safe",
+  "title": "RSNA knee bounded image confirmation safe",
+  "code_file": "confirm.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "false",
+  "machine_shape": "",
+  "dataset_sources": [],
+  "competition_sources": ["rsna-knee-abnormality-detection"],
+  "kernel_sources": ["aymenslimani/rsna-knee-image-duplicate-screen"],
+  "model_sources": []
+}

@@ -1,0 +1,22 @@
+{
+  "id": "aymenslimani/rsna-knee-v2-d01-cpu-preflight",
+  "title": "RSNA knee V2 D01 CPU preflight",
+  "code_file": "check.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_tpu": "false",
+  "enable_internet": "false",
+  "machine_shape": "",
+  "dataset_sources": [
+    "stevenleehans/rsna-knee-llm-report-labels",
+    "aymenslimani/rsna-knee-v2-frozen-dev-split",
+    "aymenslimani/rsna-v2-official-resnet18-imagenet-v1"
+  ],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "kernel_sources": [],
+  "model_sources": []
+}

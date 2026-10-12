@@ -1,0 +1,15 @@
+{
+  "candidate_pairs": 272,
+  "same_plane_random_controls": 100,
+  "control_seed": 20261009,
+  "candidate_cross_fold_pairs": 100,
+  "expert_linked_header_only_pairs": 1,
+  "control_matching": "First screened series matches plane, fluid-sensitive and fat-suppression metadata; all controls nonexcluded",
+  "payload_sha256": "60cf5b17442a1edb543846e4723ea6e5a43e83fe728638f7368ef7e1bf9ab5b5",
+  "script_sha256": "7a2b25392d6a65887ccada651fc66ceb44ce305ce9952860fa834349ada59004",
+  "source_sha256": {
+    "candidate_edges": "dd6162f47ca298d7622279a5315c9aae61b71b9700e3733ea192413882e4657f",
+    "candidate_manifest": "8769e66f39c5f67fd589bcaca99c4d9fab6dcb0613cd74fee276c963a9d7db83",
+    "train_series": "573c1d80772bf41211c91b149c95677385a1c22d63f485c347f1b46c0177aef3"
+  }
+}
