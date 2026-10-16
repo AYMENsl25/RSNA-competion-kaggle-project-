@@ -1,0 +1,25 @@
+{
+  "id": "nartaa/rsna-knee-0949-anatomical-mirror",
+  "id_no": 137529884,
+  "title": "RSNA Knee 0949 Anatomical Mirror",
+  "code_file": "rsna-knee-0949-anatomical-mirror.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "nartaa/rsna-knee-publication-swa-weights-20261007"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "machine_shape": "NvidiaTeslaT4"
+}

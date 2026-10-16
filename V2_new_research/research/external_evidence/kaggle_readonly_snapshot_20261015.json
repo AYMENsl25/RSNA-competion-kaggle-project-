@@ -1,0 +1,39 @@
+{
+  "checked_date": "2026-10-15",
+  "method": "Authenticated read-only Kaggle CLI queries: competitions list, competitions submissions, datasets files, datasets metadata",
+  "competition": "rsna-knee-abnormality-detection",
+  "deadline_api": "2026-10-22 23:59:00",
+  "deadline_istanbul": "2026-10-23 02:59:00 +03:00",
+  "user_has_entered": true,
+  "submissions": [
+    {"ref": "57228847", "name": "Ens4", "status": "COMPLETE", "public_score": 0.857},
+    {"ref": "57196314", "name": "Ens3", "status": "COMPLETE", "public_score": 0.848},
+    {"ref": "57181257", "name": "E4+E5", "status": "COMPLETE", "public_score": 0.841},
+    {"ref": "57157791", "name": "E1", "status": "COMPLETE", "public_score": 0.807},
+    {"ref": "57144276", "name": "E01", "status": "COMPLETE", "public_score": 0.769}
+  ],
+  "raptor_maxspan": {
+    "dataset": "dreaddevelopment/raptor-knee-maxspan",
+    "listed_files": ["raptor_ft_coatnet_v5_full_swa.pt"],
+    "file_bytes": 292831426,
+    "file_creation_date": "2026-08-22 20:14:56.069000",
+    "checkpoint_downloaded": false
+  },
+  "goodpjw_reader": {
+    "dataset": "goodpjw2008/rsna-knee-2-5d-convnext-reader",
+    "license_from_live_metadata": "apache-2.0",
+    "release": "cnxt_v0_fold0, fold1, fold2",
+    "author_reported_three_fold_reader_public_score": 0.929,
+    "downloaded_code_only": ["knee.py", "make_labels.py", "preprocess.py", "train.py"],
+    "checkpoint_downloaded": false,
+    "code_executed": false,
+    "metadata_file": "goodpjw_reader_20261015/dataset-metadata.json"
+  },
+  "limits": [
+    "No live GPU quota or reset time was verified",
+    "No new submission or training job was launched",
+    "No expert-label evaluation was performed",
+    "Kaggle browser pages did not provide readable current code requirements",
+    "Reference reader scores are author claims, not our independent reproductions"
+  ]
+}
