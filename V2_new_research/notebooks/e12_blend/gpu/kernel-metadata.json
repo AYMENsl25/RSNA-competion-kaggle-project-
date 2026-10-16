@@ -1,0 +1,22 @@
+{
+  "id": "aymenslimani/rsna-knee-v3-e12-blend-gpu",
+  "title": "rsna knee v3 e12 blend gpu",
+  "code_file": "infer.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "false",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "aymenslimani/rsna-knee-v3-ens4",
+    "dreaddevelopment/raptor-knee-maxspan",
+    "goodpjw2008/rsna-knee-2-5d-convnext-reader"
+  ],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "kernel_sources": [],
+  "model_sources": []
+}
