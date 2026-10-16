@@ -50,7 +50,11 @@ def test_shapes_unchanged_and_windows_from_each_series(train):
     half = n // 2
     xa, _ = D.series_windows(*a, half, np.random.default_rng(0) if train else None)
     assert torch.equal(x[0, :half], xa) and not torch.equal(x[0, half:], xa)
-    assert m[0].all() and m[1].all() and not m[2].any()
+    assert m[0].all() and not m[2].any()
+    # A 10-slice series has eight adjacent triplets; validation pads the remaining budget.
+    valid = min(n, len(a[0]) - 2)
+    assert m[1, :valid].all() and not m[1, valid:].any()
+    assert not x[1, valid:].count_nonzero()
 
 
 def test_validation_deterministic_and_single_series_matches_m00():
