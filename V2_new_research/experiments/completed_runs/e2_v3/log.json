@@ -1,0 +1,761 @@
+{
+ "args": {
+  "cache": [
+   "outputs/cache_v3/s0",
+   "outputs/cache_v3/s1",
+   "outputs/cache_v3/s2",
+   "outputs/cache_v3/s3",
+   "outputs/cache_v3/s4"
+  ],
+  "out": "outputs/e2_v3",
+  "labels": "v3",
+  "target": "soft",
+  "pos_weight_clip": 10.0,
+  "epochs": 12,
+  "bs": 2,
+  "val_bs": 2,
+  "lr": 0.0003,
+  "wd": 0.01,
+  "res": 224,
+  "train_windows": 12,
+  "eval_windows": 12,
+  "slab": 12,
+  "head": "attn",
+  "mirror": true,
+  "workers": 3,
+  "seed": 0,
+  "pause_temp": 87,
+  "max_train_studies": 0,
+  "repeat": 1
+ },
+ "train_studies": 3428,
+ "val_studies": 885,
+ "pos_weight": [
+  3.0204873085021973,
+  4.5256218910217285,
+  1.0,
+  2.660050868988037,
+  1.239064335823059,
+  1.7655985355377197,
+  1.0,
+  1.426485300064087,
+  1.0,
+  2.0952630043029785,
+  2.1435277462005615,
+  5.816384792327881
+ ],
+ "epochs": [
+  {
+   "epoch": 1,
+   "train_loss": 0.9031188585724825,
+   "amp_skipped": 2,
+   "train_seconds": 767.2870397000006,
+   "loader_wait_seconds": 9.128473199994914,
+   "loader_wait_fraction": 0.01189707727054015,
+   "train_studies_per_hour": 16083.681023499492,
+   "val_seconds": 73.93228830000044,
+   "val_studies_per_hour": 43093.48558334805,
+   "lr_end": 0.0002948888739433621,
+   "peak_mem_mib": 1124.40478515625,
+   "gpu": {
+    "temp_c": 55,
+    "sm_mhz": 210,
+    "power_w": 1.68,
+    "throttle": "0x0000000000000001"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.6752894481419855,
+      "MCL": 0.5888077858880778,
+      "Medial Meniscus": 0.6576013684066734,
+      "Lateral Meniscus": 0.6484868514943702,
+      "Medial OA": 0.7260419887984056,
+      "Lateral OA": 0.7235643839974548,
+      "PF OA": 0.6551733213023535,
+      "Effusion": 0.7651117455639467,
+      "Synovitis": 0.8879855465221319,
+      "Baker's": 0.6028857158939528,
+      "Contusion": 0.7066363714310212,
+      "Fracture": 0.7012910798122066
+     },
+     "macro": 0.6949063006043817,
+     "macro_no_synovitis": 0.6773536418845864,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.6752894481419855,
+      "MCL": 0.5888077858880778,
+      "Medial Meniscus": 0.6576013684066734,
+      "Lateral Meniscus": 0.6484868514943702,
+      "Medial OA": 0.7260419887984056,
+      "Lateral OA": 0.7235643839974548,
+      "PF OA": 0.6551733213023535,
+      "Effusion": 0.8253715343045113,
+      "Synovitis": 0.8879855465221319,
+      "Baker's": 0.6573911028730306,
+      "Contusion": 0.7066363714310212,
+      "Fracture": 0.7012910798122066
+     },
+     "macro": 0.7044700652476853,
+     "macro_no_synovitis": 0.687786839677281,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 2,
+   "train_loss": 0.8869560040976926,
+   "amp_skipped": 1,
+   "train_seconds": 712.3828542000001,
+   "loader_wait_seconds": 2.1486446999915643,
+   "loader_wait_fraction": 0.0030161375829356168,
+   "train_studies_per_hour": 17323.269260682322,
+   "val_seconds": 23.50049089999993,
+   "val_studies_per_hour": 135571.63608016414,
+   "lr_end": 0.0002799038105676678,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 59,
+    "sm_mhz": 2430,
+    "power_w": 36.93,
+    "throttle": "0x0000000000000000"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.699667221297837,
+      "MCL": 0.6792608040783223,
+      "Medial Meniscus": 0.7247447600833873,
+      "Lateral Meniscus": 0.7177409057108305,
+      "Medial OA": 0.7788458234546267,
+      "Lateral OA": 0.7632625467271137,
+      "PF OA": 0.7242349048800661,
+      "Effusion": 0.8081061582857494,
+      "Synovitis": 0.9274314965371876,
+      "Baker's": 0.716869617426872,
+      "Contusion": 0.7602246420303524,
+      "Fracture": 0.8096309337506521
+     },
+     "macro": 0.7591683178552496,
+     "macro_no_synovitis": 0.7438716652478008,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.699667221297837,
+      "MCL": 0.6792608040783223,
+      "Medial Meniscus": 0.7247447600833873,
+      "Lateral Meniscus": 0.7177409057108305,
+      "Medial OA": 0.7788458234546267,
+      "Lateral OA": 0.7632625467271137,
+      "PF OA": 0.7242349048800661,
+      "Effusion": 0.8968661889097744,
+      "Synovitis": 0.9274314965371876,
+      "Baker's": 0.7562326227988878,
+      "Contusion": 0.7602246420303524,
+      "Fracture": 0.8096309337506521
+     },
+     "macro": 0.7698452375215866,
+     "macro_no_synovitis": 0.7555192139747138,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 3,
+   "train_loss": 0.8690961465813315,
+   "amp_skipped": 1,
+   "train_seconds": 707.3052285000012,
+   "loader_wait_seconds": 2.5100894000352127,
+   "loader_wait_fraction": 0.0035488065108162966,
+   "train_studies_per_hour": 17447.630107544126,
+   "val_seconds": 21.30546349999895,
+   "val_studies_per_hour": 149539.1076565951,
+   "lr_end": 0.00025606601717798364,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 62,
+    "sm_mhz": 2415,
+    "power_w": 37.38,
+    "throttle": "0x0000000000000000"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.7020157376594565,
+      "MCL": 0.6820183061058973,
+      "Medial Meniscus": 0.7451758319425554,
+      "Lateral Meniscus": 0.7179962894248608,
+      "Medial OA": 0.8040408205339655,
+      "Lateral OA": 0.7730056470213951,
+      "PF OA": 0.7568087826152342,
+      "Effusion": 0.8335405538159268,
+      "Synovitis": 0.9352604637157482,
+      "Baker's": 0.7288215096534514,
+      "Contusion": 0.7616393723741748,
+      "Fracture": 0.8206833594157538
+     },
+     "macro": 0.7717505561898683,
+     "macro_no_synovitis": 0.7568860191420611,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.7020157376594565,
+      "MCL": 0.6820183061058973,
+      "Medial Meniscus": 0.7451758319425554,
+      "Lateral Meniscus": 0.7179962894248608,
+      "Medial OA": 0.8040408205339655,
+      "Lateral OA": 0.7730056470213951,
+      "PF OA": 0.7568087826152342,
+      "Effusion": 0.9072779605263158,
+      "Synovitis": 0.9352604637157482,
+      "Baker's": 0.7739341983317887,
+      "Contusion": 0.7616393723741748,
+      "Fracture": 0.8206833594157538
+     },
+     "macro": 0.7816547308055956,
+     "macro_no_synovitis": 0.7676905732683089,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 4,
+   "train_loss": 0.850343402288202,
+   "amp_skipped": 0,
+   "train_seconds": 685.4023375000015,
+   "loader_wait_seconds": 1.3550559999894176,
+   "loader_wait_fraction": 0.001977022729353348,
+   "train_studies_per_hour": 18005.191002138905,
+   "val_seconds": 16.638746699998592,
+   "val_studies_per_hour": 191480.76819994318,
+   "lr_end": 0.0002250000000000014,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 67,
+    "sm_mhz": 1935,
+    "power_w": 44.07,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.6788338879645036,
+      "MCL": 0.6911771521260572,
+      "Medial Meniscus": 0.7623046724198348,
+      "Lateral Meniscus": 0.7252071237033643,
+      "Medial OA": 0.8128028038346562,
+      "Lateral OA": 0.7774695776664281,
+      "PF OA": 0.7627866756899015,
+      "Effusion": 0.801759071652238,
+      "Synovitis": 0.9223125564588979,
+      "Baker's": 0.7909826069009512,
+      "Contusion": 0.7628933379061991,
+      "Fracture": 0.8301056338028169
+     },
+     "macro": 0.7765529250104874,
+     "macro_no_synovitis": 0.7633020494242683,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.6788338879645036,
+      "MCL": 0.6911771521260572,
+      "Medial Meniscus": 0.7623046724198348,
+      "Lateral Meniscus": 0.7252071237033643,
+      "Medial OA": 0.8128028038346562,
+      "Lateral OA": 0.7774695776664281,
+      "PF OA": 0.7627866756899015,
+      "Effusion": 0.8902872415413534,
+      "Synovitis": 0.9223125564588979,
+      "Baker's": 0.8145505097312327,
+      "Contusion": 0.7628933379061991,
+      "Fracture": 0.8301056338028169
+     },
+     "macro": 0.7858942644037704,
+     "macro_no_synovitis": 0.7734926014896679,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 5,
+   "train_loss": 0.8218072110150214,
+   "amp_skipped": 1,
+   "train_seconds": 641.3958331000013,
+   "loader_wait_seconds": 0.5995141000094009,
+   "loader_wait_fraction": 0.0009347022058310277,
+   "train_studies_per_hour": 19240.536597118684,
+   "val_seconds": 16.23269059999984,
+   "val_studies_per_hour": 196270.6047018497,
+   "lr_end": 0.0001888228567653795,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 66,
+    "sm_mhz": 2385,
+    "power_w": 41.15,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.7106645174708819,
+      "MCL": 0.7258602711157456,
+      "Medial Meniscus": 0.8069263709308611,
+      "Lateral Meniscus": 0.7517820525339323,
+      "Medial OA": 0.8556763907500945,
+      "Lateral OA": 0.7962697844587608,
+      "PF OA": 0.7871870065418453,
+      "Effusion": 0.8416298274697611,
+      "Synovitis": 0.9331526648599819,
+      "Baker's": 0.8530498902377245,
+      "Contusion": 0.7776944182457344,
+      "Fracture": 0.8329094940010433
+     },
+     "macro": 0.8060668907180307,
+     "macro_no_synovitis": 0.7945136385233077,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.7106645174708819,
+      "MCL": 0.7258602711157456,
+      "Medial Meniscus": 0.8069263709308611,
+      "Lateral Meniscus": 0.7517820525339323,
+      "Medial OA": 0.8556763907500945,
+      "Lateral OA": 0.7962697844587608,
+      "PF OA": 0.7871870065418453,
+      "Effusion": 0.9117422462406015,
+      "Synovitis": 0.9331526648599819,
+      "Baker's": 0.8828313253012048,
+      "Contusion": 0.7776944182457344,
+      "Fracture": 0.8329094940010433
+     },
+     "macro": 0.8143913785375574,
+     "macro_no_synovitis": 0.8035948979627915,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 6,
+   "train_loss": 0.8075810920190645,
+   "amp_skipped": 1,
+   "train_seconds": 642.4316067,
+   "loader_wait_seconds": 0.5934651999959897,
+   "loader_wait_fraction": 0.0009237795802800897,
+   "train_studies_per_hour": 19209.51564539516,
+   "val_seconds": 16.83919059999971,
+   "val_studies_per_hour": 189201.49285560404,
+   "lr_end": 0.00015000000000000056,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 66,
+    "sm_mhz": 1950,
+    "power_w": 37.67,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.7355362590127565,
+      "MCL": 0.7267755764106129,
+      "Medial Meniscus": 0.8135605300200153,
+      "Lateral Meniscus": 0.755485116387372,
+      "Medial OA": 0.8479022781156582,
+      "Lateral OA": 0.8080062435377396,
+      "PF OA": 0.7859989472892699,
+      "Effusion": 0.8415147049794315,
+      "Synovitis": 0.9298404095152063,
+      "Baker's": 0.8606581983976584,
+      "Contusion": 0.7844894109577296,
+      "Fracture": 0.8489501825769431
+     },
+     "macro": 0.811559821433366,
+     "macro_no_synovitis": 0.8008070406986534,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.7355362590127565,
+      "MCL": 0.7267755764106129,
+      "Medial Meniscus": 0.8135605300200153,
+      "Lateral Meniscus": 0.755485116387372,
+      "Medial OA": 0.8479022781156582,
+      "Lateral OA": 0.8080062435377396,
+      "PF OA": 0.7859989472892699,
+      "Effusion": 0.9166617716165414,
+      "Synovitis": 0.9298404095152063,
+      "Baker's": 0.9022706209453197,
+      "Contusion": 0.7844894109577296,
+      "Fracture": 0.8489501825769431
+     },
+     "macro": 0.8212897788654302,
+     "macro_no_synovitis": 0.8114215397154506,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 7,
+   "train_loss": 0.779927299313395,
+   "amp_skipped": 0,
+   "train_seconds": 648.1171390999989,
+   "loader_wait_seconds": 0.5722329999771318,
+   "loader_wait_fraction": 0.0008829160123303594,
+   "train_studies_per_hour": 19041.002398327135,
+   "val_seconds": 17.463531899998998,
+   "val_studies_per_hour": 182437.32242961592,
+   "lr_end": 0.00011117714323462225,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 65,
+    "sm_mhz": 1785,
+    "power_w": 35.31,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.7554596505823628,
+      "MCL": 0.7707391959216777,
+      "Medial Meniscus": 0.8136674367913714,
+      "Lateral Meniscus": 0.7729939233698632,
+      "Medial OA": 0.8589836099371199,
+      "Lateral OA": 0.8292869641294838,
+      "PF OA": 0.7984134145424469,
+      "Effusion": 0.8477773684533677,
+      "Synovitis": 0.9400782896717856,
+      "Baker's": 0.8798243803591197,
+      "Contusion": 0.7935029580725371,
+      "Fracture": 0.8648930620761607
+     },
+     "macro": 0.8271350211589414,
+     "macro_no_synovitis": 0.8168674512941375,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.7554596505823628,
+      "MCL": 0.7707391959216777,
+      "Medial Meniscus": 0.8136674367913714,
+      "Lateral Meniscus": 0.7729939233698632,
+      "Medial OA": 0.8589836099371199,
+      "Lateral OA": 0.8292869641294838,
+      "PF OA": 0.7984134145424469,
+      "Effusion": 0.9224844337406015,
+      "Synovitis": 0.9400782896717856,
+      "Baker's": 0.9102641334569045,
+      "Contusion": 0.7935029580725371,
+      "Fracture": 0.8648930620761607
+     },
+     "macro": 0.8358972560243597,
+     "macro_no_synovitis": 0.8264262529655029,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 8,
+   "train_loss": 0.7543508040272091,
+   "amp_skipped": 0,
+   "train_seconds": 640.7214132000008,
+   "loader_wait_seconds": 0.455902799987598,
+   "loader_wait_fraction": 0.0007115460644754324,
+   "train_studies_per_hour": 19260.789082052772,
+   "val_seconds": 16.188721799999257,
+   "val_studies_per_hour": 196803.67847201787,
+   "lr_end": 7.500000000000033e-05,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 66,
+    "sm_mhz": 2280,
+    "power_w": 39.29,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.7925246117581808,
+      "MCL": 0.7809871393812999,
+      "Medial Meniscus": 0.8150572248190009,
+      "Lateral Meniscus": 0.7617345060954084,
+      "Medial OA": 0.8665171975397725,
+      "Lateral OA": 0.844239640499483,
+      "PF OA": 0.8115497405819987,
+      "Effusion": 0.8508933505249585,
+      "Synovitis": 0.9488105992171033,
+      "Baker's": 0.8760718239300523,
+      "Contusion": 0.7939638171996913,
+      "Fracture": 0.8790753781950965
+     },
+     "macro": 0.8351187524785039,
+     "macro_no_synovitis": 0.8247831300477221,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.7925246117581808,
+      "MCL": 0.7809871393812999,
+      "Medial Meniscus": 0.8150572248190009,
+      "Lateral Meniscus": 0.7617345060954084,
+      "Medial OA": 0.8665171975397725,
+      "Lateral OA": 0.844239640499483,
+      "PF OA": 0.8115497405819987,
+      "Effusion": 0.9242980498120301,
+      "Synovitis": 0.9488105992171033,
+      "Baker's": 0.9098239110287303,
+      "Contusion": 0.7939638171996913,
+      "Fracture": 0.8790753781950965
+     },
+     "macro": 0.8440484846773163,
+     "macro_no_synovitis": 0.8345246560827903,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 9,
+   "train_loss": 0.7268470026196232,
+   "amp_skipped": 1,
+   "train_seconds": 642.0436060000011,
+   "loader_wait_seconds": 0.5941088999752537,
+   "loader_wait_fraction": 0.0009253404199079474,
+   "train_studies_per_hour": 19221.124367057364,
+   "val_seconds": 16.231907399998818,
+   "val_studies_per_hour": 196280.07488511375,
+   "lr_end": 4.393398282201786e-05,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 66,
+    "sm_mhz": 1800,
+    "power_w": 40.58,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.7637617859123683,
+      "MCL": 0.770397404703974,
+      "Medial Meniscus": 0.8150334677586996,
+      "Lateral Meniscus": 0.7671801882328199,
+      "Medial OA": 0.8790932206301756,
+      "Lateral OA": 0.85243179829794,
+      "PF OA": 0.8247687796074893,
+      "Effusion": 0.8539556087677289,
+      "Synovitis": 0.9680819030412526,
+      "Baker's": 0.8933898718501979,
+      "Contusion": 0.7953463945811541,
+      "Fracture": 0.8820422535211268
+     },
+     "macro": 0.8387902230754105,
+     "macro_no_synovitis": 0.8270364339876067,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.7637617859123683,
+      "MCL": 0.770397404703974,
+      "Medial Meniscus": 0.8150334677586996,
+      "Lateral Meniscus": 0.7671801882328199,
+      "Medial OA": 0.8790932206301756,
+      "Lateral OA": 0.85243179829794,
+      "PF OA": 0.8247687796074893,
+      "Effusion": 0.9288063909774437,
+      "Synovitis": 0.9680819030412526,
+      "Baker's": 0.9193466172381835,
+      "Contusion": 0.7953463945811541,
+      "Fracture": 0.8820422535211268
+     },
+     "macro": 0.8471908503752189,
+     "macro_no_synovitis": 0.8362007546783068,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 10,
+   "train_loss": 0.7036915775844903,
+   "amp_skipped": 2,
+   "train_seconds": 647.2392395000006,
+   "loader_wait_seconds": 0.6329942000102164,
+   "loader_wait_fraction": 0.000977991075601676,
+   "train_studies_per_hour": 19066.829151973856,
+   "val_seconds": 16.037373299999672,
+   "val_studies_per_hour": 198660.96151793544,
+   "lr_end": 2.0096189432334126e-05,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 65,
+    "sm_mhz": 2160,
+    "power_w": 43.06,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.802932612312812,
+      "MCL": 0.7870814505851003,
+      "Medial Meniscus": 0.8121944990526873,
+      "Lateral Meniscus": 0.7764941825092201,
+      "Medial OA": 0.874677868261004,
+      "Lateral OA": 0.8521037143084387,
+      "PF OA": 0.8183096473419054,
+      "Effusion": 0.8490437158469946,
+      "Synovitis": 0.971093044263776,
+      "Baker's": 0.8883614462352477,
+      "Contusion": 0.8032345880133757,
+      "Fracture": 0.8914319248826291
+     },
+     "macro": 0.843913224467766,
+     "macro_no_synovitis": 0.8323514226681287,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.802932612312812,
+      "MCL": 0.7870814505851003,
+      "Medial Meniscus": 0.8121944990526873,
+      "Lateral Meniscus": 0.7764941825092201,
+      "Medial OA": 0.874677868261004,
+      "Lateral OA": 0.8521037143084387,
+      "PF OA": 0.8183096473419054,
+      "Effusion": 0.9282336701127819,
+      "Synovitis": 0.971093044263776,
+      "Baker's": 0.9150602409638554,
+      "Contusion": 0.8032345880133757,
+      "Fracture": 0.8914319248826291
+     },
+     "macro": 0.8527372868839657,
+     "macro_no_synovitis": 0.8419776725767101,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 11,
+   "train_loss": 0.6844483055478634,
+   "amp_skipped": 0,
+   "train_seconds": 647.643828100001,
+   "loader_wait_seconds": 0.5492821000261756,
+   "loader_wait_fraction": 0.0008481237312762014,
+   "train_studies_per_hour": 19054.917941863703,
+   "val_seconds": 18.524808300000586,
+   "val_studies_per_hour": 171985.58540548565,
+   "lr_end": 5.111126056639728e-06,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 63,
+    "sm_mhz": 1410,
+    "power_w": 24.51,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.8076296450360511,
+      "MCL": 0.7806974858069748,
+      "Medial Meniscus": 0.8113986375325917,
+      "Lateral Meniscus": 0.7748867673679704,
+      "Medial OA": 0.8748754423942549,
+      "Lateral OA": 0.8529786049471089,
+      "PF OA": 0.8229942100909843,
+      "Effusion": 0.850993123349911,
+      "Synovitis": 0.9686841312857573,
+      "Baker's": 0.8874233071279809,
+      "Contusion": 0.8075966732401612,
+      "Fracture": 0.8934207094418362
+     },
+     "macro": 0.8444648948017984,
+     "macro_no_synovitis": 0.8331722369396204,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.8076296450360511,
+      "MCL": 0.7806974858069748,
+      "Medial Meniscus": 0.8113986375325917,
+      "Lateral Meniscus": 0.7748867673679704,
+      "Medial OA": 0.8748754423942549,
+      "Lateral OA": 0.8529786049471089,
+      "PF OA": 0.8229942100909843,
+      "Effusion": 0.927998707706767,
+      "Synovitis": 0.9686841312857573,
+      "Baker's": 0.9179564411492123,
+      "Contusion": 0.8075966732401612,
+      "Fracture": 0.8934207094418362
+     },
+     "macro": 0.8534264546666391,
+     "macro_no_synovitis": 0.8429484840649011,
+     "targets_scored": 12
+    }
+   }
+  },
+  {
+   "epoch": 12,
+   "train_loss": 0.6752356014180768,
+   "amp_skipped": 1,
+   "train_seconds": 643.4191377999996,
+   "loader_wait_seconds": 0.47255089999816846,
+   "loader_wait_fraction": 0.0007344371222993622,
+   "train_studies_per_hour": 19180.032540213335,
+   "val_seconds": 16.731252999999924,
+   "val_studies_per_hour": 190422.0801633933,
+   "lr_end": 0.0,
+   "peak_mem_mib": 1124.70947265625,
+   "gpu": {
+    "temp_c": 66,
+    "sm_mhz": 1935,
+    "power_w": 40.33,
+    "throttle": "0x0000000000000004"
+   },
+   "val": {
+    "public": {
+     "auc": {
+      "ACL": 0.8108447726012202,
+      "MCL": 0.7829567836867107,
+      "Medial Meniscus": 0.8182822457549103,
+      "Lateral Meniscus": 0.7769223257945063,
+      "Medial OA": 0.8780194481668556,
+      "Lateral OA": 0.8534061083273682,
+      "PF OA": 0.8240694789081886,
+      "Effusion": 0.8481457604224228,
+      "Synovitis": 0.971996386630533,
+      "Baker's": 0.8869730003564928,
+      "Contusion": 0.8084433679156307,
+      "Fracture": 0.8936815336463224
+     },
+     "macro": 0.8461451010175968,
+     "macro_no_synovitis": 0.8347040750527843,
+     "targets_scored": 12
+    },
+    "v3": {
+     "auc": {
+      "ACL": 0.8108447726012202,
+      "MCL": 0.7829567836867107,
+      "Medial Meniscus": 0.8182822457549103,
+      "Lateral Meniscus": 0.7769223257945063,
+      "Medial OA": 0.8780194481668556,
+      "Lateral OA": 0.8534061083273682,
+      "PF OA": 0.8240694789081886,
+      "Effusion": 0.9273819313909775,
+      "Synovitis": 0.971996386630533,
+      "Baker's": 0.9185356811862836,
+      "Contusion": 0.8084433679156307,
+      "Fracture": 0.8936815336463224
+     },
+     "macro": 0.8553783386674589,
+     "macro_no_synovitis": 0.8447766979435432,
+     "targets_scored": 12
+    }
+   }
+  }
+ ],
+ "best": {
+  "epoch": 12,
+  "macro": 0.8553783386674589
+ }
+}

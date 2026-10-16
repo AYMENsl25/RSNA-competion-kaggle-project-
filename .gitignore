@@ -1,5 +1,6 @@
 # Local validation runtime and Python caches only; existing research assets stay tracked.
 .venv-v2/
+.venv/
 .tools/
 .kaggle/
 __pycache__/
@@ -18,3 +19,18 @@ V2_new_research/outputs/
 V2_new_research/assets/
 V2_new_research/research/*.json
 V2_new_research/research/*.csv
+
+# Preserve reviewable aggregate evidence; patient-level tables and outputs stay local.
+!V2_new_research/research/s01_series_coverage.json
+!V2_new_research/research/NEXT_SIX_EVIDENCE_AUDIT.json
+
+# Historical local test scratch directories are not part of the V1 source archive.
+.pytest-tmp*/
+pytest-of-*/
+tmp_pathfix_tests_*/
+rsna_experiment_notebook_*/
+
+# N4 is still in progress and is intentionally absent from this publication.
+V2_new_research/notebooks/cache_n4/
+V2_new_research/research/N4_NATIVE_RESOLUTION_PILOT.md
+V2_new_research/tests/test_n4_resolution.py
