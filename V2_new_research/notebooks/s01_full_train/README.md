@@ -1,0 +1,5 @@
+# S01 multi-series full training
+
+Controlled three-epoch comparison against P00. S01 uses up to two ranked series per MRI plane while keeping four training and 16 validation windows per plane in total. The architecture, ImageNet weights, 224-pixel preprocessing, frozen development split and report-proxy labels, seed, AdamW learning rate, masked BCE, cosine schedule, and checkpoint rule match P00. A selected series that fails DICOM decoding fails the study and aborts full training.
+
+Generate all standalone Kaggle scripts with `python V2_new_research/src/research/build_s01.py` from the project root. The private CPU preflight (`s01_cpu_check`) passed on Kaggle with 20 real studies, 111 selected series, 600 valid windows, and zero failures. The bounded GPU pilot (`s01_gpu_pilot`) must pass before this full notebook is launched. Its runtime projection must fit within the 7.5-hour stop rule; full training has an eight-hour watchdog. No expert-label check or competition submission is part of this experiment.

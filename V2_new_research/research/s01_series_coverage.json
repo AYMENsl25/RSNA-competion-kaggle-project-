@@ -1,0 +1,84 @@
+{
+  "source_sha256": "573c1d80772bf41211c91b149c95677385a1c22d63f485c347f1b46c0177aef3",
+  "split_sha256": "dbe879ab5cb719e09c0f9aec612d5b6b53648d6f32dd8d405a075482339b3819",
+  "partitions": {
+    "candidate_train": {
+      "studies": 3457,
+      "one_series_policy_loads": 10371,
+      "two_series_policy_loads": 17175,
+      "added_loads": 6804,
+      "role_series_count_histogram_3_means_3_or_more": {
+        "Sagittal": {
+          "0": 0,
+          "1": 88,
+          "2": 2592,
+          "3": 777
+        },
+        "Coronal": {
+          "0": 0,
+          "1": 886,
+          "2": 2006,
+          "3": 565
+        },
+        "Axial": {
+          "0": 0,
+          "1": 2593,
+          "2": 577,
+          "3": 287
+        }
+      }
+    },
+    "candidate_validation": {
+      "studies": 885,
+      "one_series_policy_loads": 2655,
+      "two_series_policy_loads": 4383,
+      "added_loads": 1728,
+      "role_series_count_histogram_3_means_3_or_more": {
+        "Sagittal": {
+          "0": 0,
+          "1": 29,
+          "2": 691,
+          "3": 165
+        },
+        "Coronal": {
+          "0": 0,
+          "1": 222,
+          "2": 528,
+          "3": 135
+        },
+        "Axial": {
+          "0": 0,
+          "1": 676,
+          "2": 152,
+          "3": 57
+        }
+      }
+    },
+    "excluded": {
+      "studies": 65,
+      "one_series_policy_loads": 195,
+      "two_series_policy_loads": 328,
+      "added_loads": 133,
+      "role_series_count_histogram_3_means_3_or_more": {
+        "Sagittal": {
+          "0": 0,
+          "1": 2,
+          "2": 44,
+          "3": 19
+        },
+        "Coronal": {
+          "0": 0,
+          "1": 16,
+          "2": 35,
+          "3": 14
+        },
+        "Axial": {
+          "0": 0,
+          "1": 44,
+          "2": 11,
+          "3": 10
+        }
+      }
+    }
+  }
+}
