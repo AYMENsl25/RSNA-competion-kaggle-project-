@@ -38,6 +38,21 @@ def select_series(rows):
     return {r: (v[1] if v else None) for r, v in best.items()}
 
 
+SLOTS6 = tuple((p, f) for p in ROLES for f in (1, 0))  # plane x {fat-sat, non-fat-sat}
+
+
+def slot_names(n):
+    return ROLES if n == 3 else SLOTS6
+
+
+def select_slots(rows, n=3):
+    """n=3: select_series. n=6: {(plane, fatsat): uid or None}, same preference rule within each slot."""
+    rows = list(rows)
+    if n == 3:
+        return select_series(rows)
+    assert n == 6, n
+    return {(p, f): select_series([r for r in rows if int(r["Fat_Suppression"] or 0) == f])[p] for p, f in SLOTS6}
+
 def slice_position(ds):
     """Projection of ImagePositionPatient on row x col normal; None if tags missing."""
     iop, ipp = getattr(ds, "ImageOrientationPatient", None), getattr(ds, "ImagePositionPatient", None)
