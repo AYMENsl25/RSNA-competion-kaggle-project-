@@ -55,7 +55,9 @@ def _laterality(ds, r, c, sp):
     return ("L" if x > LAT_MM else "R" if x < -LAT_MM else "U"), "ipp_x", x
 
 
-def canon_series(datasets):
+def canon_series(datasets, *, out_px=OUT_PX):
+    if not isinstance(out_px, int) or out_px < 1:
+        raise ValueError("out_px must be a positive integer")
     if datasets and not hasattr(datasets[0], "pixel_array"):
         import pydicom
         datasets = [pydicom.dcmread(str(p)) for p in datasets]
@@ -94,8 +96,8 @@ def canon_series(datasets):
         fill = float(a.min())
         a = _fit(_fit(a, ch, 0, fill), cw, 1, fill)
         t = torch.from_numpy(np.ascontiguousarray(a, dtype=np.float32))[None, None]
-        mode = "area" if min(ch, cw) >= OUT_PX else "bilinear"
-        out.append(F.interpolate(t, size=(OUT_PX, OUT_PX), mode=mode,
+        mode = "area" if min(ch, cw) >= out_px else "bilinear"
+        out.append(F.interpolate(t, size=(out_px, out_px), mode=mode,
                                  **({"align_corners": False} if mode == "bilinear" else {}))[0, 0].numpy())
     vol = np.stack(out)
     v = vol.ravel()[:: max(1, vol.size // 2_000_000)]

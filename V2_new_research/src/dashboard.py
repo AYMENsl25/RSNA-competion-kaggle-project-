@@ -7,7 +7,7 @@ import csv, glob, html, io, json, os, re, subprocess, time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-NAMES = {"e1_v3": "E1 · new preprocessing", "e45_v3": "E4+E5 · relabel + soft targets",
+NAMES = {"n5_uniform16": "N5 · uniform LR 16 epochs", "n5_differential16": "N5 · encoder/head LR 16 epochs", "n4_native384": "N4 · native384 / input320 attention", "e1_v3": "E1 · new preprocessing", "e45_v3": "E4+E5 · relabel + soft targets",
          "e2_v3": "E2 · slab 12 + attention (rejected)", "e6_v3": "E6 · E4+E5 + augmentation + 16 ep + avg last 3",
          "e7_320": "E7 · E4+E5 at 320 px", "e8_cnxt": "E8 · ConvNeXt-Tiny", "e3_cnxt6": "E3 · ConvNeXt-Tiny + 6 slots",
          "n1_attn_random": "N1 · ConvNeXt-Tiny + random-window attention (E8 control)",
@@ -28,6 +28,55 @@ def leaderboard():
             pass
         _lb["t"] = time.time()
     return _lb["rows"]
+
+
+KERNELS = [  # Kaggle runs since 2026-10-17 (public-weights track)
+    ("aymenslimani/rsna-knee-f0-fork-0958", "F0 · public 0.958 stack, unchanged (reproduction)", None),
+    ("aymenslimani/rsna-knee-k1-raptor-ft", "K1-A · Raptor-384 fine-tune: consensus labels + parent distillation + aug", "k1_raptor_ft/armA"),
+    ("aymenslimani/rsna-knee-k1-raptor-ft", "K1-B · Raptor-384 fine-tune: same targets + dual view (global + 1.5x zoom)", "k1_raptor_ft/armB"),
+    ("aymenslimani/rsna-knee-k2-fresh-effv2", "K2-A · fresh EfficientNetV2-S (ImageNet), 1.5x joint-zoom view, labels only", "k2_fresh/armA"),
+    ("aymenslimani/rsna-knee-k2-fresh-effv2", "K2-B · fresh EfficientNetV2-S (ImageNet), global view, labels only", "k2_fresh/armB"),
+    ("aymenslimani/rsna-knee-k3-compart-seresnext", "K3-A · fresh SE-ResNeXt-50, medial/lateral compartment tiles, EMA, 256→320", "k3_compart/armA"),
+    ("aymenslimani/rsna-knee-k3-compart-seresnext", "K3-B · fresh EfficientNetV2-S, compartment tiles, EMA, 256→320", "k3_compart/armB"),
+    ("aymenslimani/rsna-knee-k4-warm-compart", "K4-A · Raptor encoder warm start, compartment tiles, fresh head, labels only, enc LR 4e-5", "k4_warm_compart/armA"),
+    ("aymenslimani/rsna-knee-k4-warm-compart", "K4-B · same, enc LR 2e-4 (leave the parent basin)", "k4_warm_compart/armB"),
+    ("aymenslimani/rsna-knee-t1-teacher-convnexts-2", "T1 · 4-fold ConvNeXt-S teacher (folds 0,2 on GPU0)", "t1_teacher/armA/fold0"),
+    ("aymenslimani/rsna-knee-t1-teacher-convnexts-2", "T1 · 4-fold ConvNeXt-S teacher (folds 1,3 on GPU1)", "t1_teacher/armB/fold1"),
+    ("aymenslimani/rsna-knee-s1-students-v3", "S1-A · Raptor encoder + compartment view + labels v3", "s1_students/armA"),
+    ("aymenslimani/rsna-knee-s1-students-v3", "S1-B · ConvNeXt-S ImageNet + labels v3 (teacher recipe, full data)", "s1_students/armB"),
+]
+_ks = {}
+
+
+def kernel_status(ref):
+    c = _ks.get(ref)
+    if c is None or time.time() - c[0] > 300:  # ponytail: polls Kaggle at most every 5 min per kernel
+        try:
+            out = subprocess.run(["kaggle", "kernels", "status", ref], capture_output=True, text=True, timeout=60).stdout
+            m = re.search(r'status "KernelWorkerStatus\.(\w+)"', out)
+            _ks[ref] = (time.time(), m.group(1).lower() if m else "unknown")
+        except Exception:
+            _ks[ref] = (time.time(), "unknown")
+    return _ks[ref][1]
+
+
+def kaggle_panel():
+    rows = ""
+    for ref, desc, out in KERNELS:
+        note = ""
+        log = os.path.join(ROOT, "outputs", out, "log.jsonl") if out else None
+        if log and os.path.exists(log):  # filled after `kaggle kernels output` downloads the run
+            ev = [json.loads(x) for x in open(log, encoding="utf-8") if x.strip()]
+            gold = [e for e in ev if e.get("ev") == "gold"]
+            plan = next((e for e in ev if e.get("ev") == "plan"), None)
+            note = " · ".join([f"gold58 {e['tag']} {e['macro']:.4f}" for e in gold[-3:]] +
+                              ([f"{plan['epochs']} epochs × {plan['epoch_min']} min"] if plan else []))
+        rows += (f"<tr><td>{html.escape(desc)}</td><td>{html.escape(kernel_status(ref))}</td>"
+                 f"<td>{html.escape(note) or '—'}</td></tr>")
+    return ("<section><h2>Kaggle runs · public-weights track</h2><div class='cfg'>Reference LB: public 0.958 stack "
+            "(nartaa CoAtNet + heliosli R6 + goodpjw reader) · top 0.969. Gold-58 numbers are optimistic for the "
+            "Raptor parent (its SWA epochs were picked on gold-58); the LB decides.</div>"
+            "<table><tr><th>Run</th><th>Kaggle status</th><th>Latest</th></tr>" + rows + "</table></section>")
 
 
 def runs():
@@ -66,6 +115,35 @@ def runs():
 def bar(frac, color="#2a78d6"):
     return (f'<div class="bar"><div style="width:{100*frac:.1f}%;background:{color}"></div></div>'
             f'<span class="pct">{100*frac:.1f}%</span>')
+
+
+def pipeline_panel():
+    folder = os.path.join(ROOT, "outputs", "n4_pipeline")
+    try:
+        with open(os.path.join(folder, "run_status.json")) as f:
+            status = json.load(f)
+        labels = {"building_and_downloading": "Preparing full-resolution cache", "training": "Training",
+                  "completed": "Completed", "early_stopped": "Stopped after early validation", "failed": "Needs attention"}
+        detail = []
+        for k in range(8):
+            path = os.path.join(folder, f"s{k}.json")
+            if os.path.exists(path):
+                with open(path) as f:
+                    state = json.load(f).get("state", "pending")
+            else:
+                state = "pending"
+            detail.append(f"Shard {k+1}: {state.replace('_', ' ')}")
+        title = html.escape(labels.get(status.get("state"), status.get("state", "Preparing")))
+        note = "Local training starts automatically after all eight caches pass verification."
+        if status.get("state") == "training":
+            note = "All eight caches verified. N4 training is running."
+        elif status.get("state") == "early_stopped":
+            note = "N4 stopped after the requested epoch checkpoint. See N5 experiment progress below."
+        if status.get("state") == "failed":
+            note = str(status.get("error", "Inspect the pipeline log."))
+        return f"<section><h2>N4 · {title}</h2><div>{html.escape(' · '.join(detail))}</div><p>{html.escape(note)}</p></section>"
+    except (OSError, ValueError):
+        return ""
 
 
 def page():
@@ -128,6 +206,8 @@ td,th{{border-bottom:1px solid var(--line);padding:4px 8px;text-align:right}} td
 .hi{{font-weight:bold;color:#2a9d50}}
 </style></head><body>
 <h1>RSNA Knee · experiments</h1><div class="cfg">Auto-refresh 15 s · reference {', '.join(f'{n} {v}' for n, v in REFS)}</div>
+{kaggle_panel()}
+{pipeline_panel()}
 <section><h2>Kaggle leaderboard submissions</h2><table><tr><th>Submission</th><th>Date</th><th>Public LB</th></tr>{lb}</table></section>
 {''.join(out)}
 <section><h2>Per-finding AUC comparison</h2>{table}</section>

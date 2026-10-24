@@ -29,8 +29,3 @@ V2_new_research/research/*.csv
 pytest-of-*/
 tmp_pathfix_tests_*/
 rsna_experiment_notebook_*/
-
-# N4 is still in progress and is intentionally absent from this publication.
-V2_new_research/notebooks/cache_n4/
-V2_new_research/research/N4_NATIVE_RESOLUTION_PILOT.md
-V2_new_research/tests/test_n4_resolution.py

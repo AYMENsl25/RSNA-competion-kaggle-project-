@@ -234,6 +234,22 @@ def make_model(dev, head="max", backbone="resnet18"):
     return m.to(dev).to(memory_format=torch.channels_last)
 
 
+def make_optimizer(model, lr, wd, encoder_lr=None, head_lr=None):
+    """Default preserves previous optimizer state layout; optional N5 parameter groups."""
+    if encoder_lr is None and head_lr is None:
+        return torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
+    encoder_lr = lr if encoder_lr is None else encoder_lr
+    head_lr = lr if head_lr is None else head_lr
+    if min(encoder_lr, head_lr) <= 0:
+        raise ValueError("Learning rates must be positive")
+    encoder = list(model.encoder.parameters())
+    encoder_ids = {id(p) for p in encoder}
+    head = [p for p in model.parameters() if id(p) not in encoder_ids]
+    return torch.optim.AdamW([{"params": encoder, "lr": encoder_lr, "name": "encoder"},
+                              {"params": head, "lr": head_lr, "name": "head"}],
+                             lr=lr, weight_decay=wd)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", nargs="+", required=True, help="shard dirs with slices.npy + index.csv")
@@ -245,6 +261,8 @@ def main(argv=None):
     ap.add_argument("--bs", type=int, default=2)
     ap.add_argument("--val-bs", type=int, default=2)
     ap.add_argument("--lr", type=float, default=3e-4)
+    ap.add_argument("--encoder-lr", type=float, default=None)
+    ap.add_argument("--head-lr", type=float, default=None)
     ap.add_argument("--wd", type=float, default=0.01)
     ap.add_argument("--res", type=int, default=224)
     ap.add_argument("--train-windows", type=int, default=4)
@@ -310,7 +328,7 @@ def main(argv=None):
     model = make_model(dev, args.head, args.backbone)
     if args.grad_ckpt:
         model.encoder.set_grad_checkpointing(True)
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.wd)
+    opt = make_optimizer(model, args.lr, args.wd, args.encoder_lr, args.head_lr)
     steps = math.ceil(len(tr_ds) / args.bs)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=args.epochs * steps)
     scaler = torch.amp.GradScaler("cuda")
