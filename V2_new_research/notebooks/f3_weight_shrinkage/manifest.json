@@ -1,0 +1,8 @@
+{
+  "parent_sha256": "a906df9328b6a53d7e0fe4e18962c655867c8617c54e6745a8af647033b2399c",
+  "candidate_sha256": "66e9c87d1ad65c4dd70946d657dcedb46799d869a99a3712aa635fcf32a211bc",
+  "predictive_change": "50% shrinkage of per-finding Raptor weights toward 0.5",
+  "unchanged": "All model inference cells, datasets, TTA, reader blend and container",
+  "preview_timeout_seconds": 1800,
+  "submission_status": "NOT_SUBMITTED_RUNTIME_GATE_PENDING"
+}

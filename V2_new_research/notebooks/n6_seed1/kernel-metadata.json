@@ -1,0 +1,26 @@
+{
+  "id": "aymenslimani/rsna-knee-n6-seed1-paired-gpu",
+  "title": "RSNA knee N6 seed1 paired GPU",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "false",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "aymenslimani/rsna-knee-n6-seed1-inputs"
+  ],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "kernel_sources": [
+    "aymenslimani/rsna-knee-v3-cache-s0",
+    "aymenslimani/rsna-knee-v3-cache-s1",
+    "aymenslimani/rsna-knee-v3-cache-s2",
+    "aymenslimani/rsna-knee-v3-cache-s3",
+    "aymenslimani/rsna-knee-v3-cache-s4"
+  ],
+  "model_sources": []
+}

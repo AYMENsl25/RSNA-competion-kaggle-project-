@@ -1,0 +1,29 @@
+{
+  "id": "aymenslimani/rsna-knee-t1-teacher-convnexts",
+  "title": "RSNA knee T1 teacher ConvNeXtS",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "lonnieqin/rsna-knee-raptor-tensors-s0-dataset",
+    "lonnieqin/rsna-knee-raptor-tensors-s1-dataset",
+    "lonnieqin/rsna-knee-raptor-tensors-s2-dataset",
+    "lonnieqin/rsna-knee-raptor-tensors-s3-dataset",
+    "nartaa/rsna-knee-publication-swa-weights-20261007",
+    "nartaa/rsna-knee-hpo-assets",
+    "stevenleehans/rsna-knee-llm-report-labels",
+    "pilkwang/rsna-knee-llm-labels",
+    "lixin73/rsna-knee-llm-report-labels-sol56",
+    "laymond/rsna-knee-abnormality-qwen3-8b-weak-labels"
+  ],
+  "competition_sources": [
+    "rsna-knee-abnormality-detection"
+  ],
+  "kernel_sources": [],
+  "model_sources": []
+}

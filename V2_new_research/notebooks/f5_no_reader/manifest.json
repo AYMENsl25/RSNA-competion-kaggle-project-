@@ -1,0 +1,22 @@
+{
+  "parent_sha256": "a906df9328b6a53d7e0fe4e18962c655867c8617c54e6745a8af647033b2399c",
+  "candidate_sha256": "aac7d380d5b46a42b730a42cb4e7a8cf5ae5c369ee82cb8c1d79fd94e2f6014b",
+  "unchanged_source_cell_sha256": {
+    "2": "98bf2bd6cb22635723683c6f324abb9865beb8637d5a7142a1f9d6b9c15fba6e",
+    "3": "3aa6ebc703648f643d294ffe6598b6265553ae8cb2011ffd3287bdc483284ee0",
+    "4": "34a3276ef2741a18f27e84c1440ea1d1836703c6ad523aa5b7e88841c6e4ef56",
+    "5": "92397734ab39f1fbc8cca7fd08170cd2af5f193bf698e30f5f6da6f0cf02d48c",
+    "6": "b957ee99427ab2ce125c2f272f8fc85ad3f0524fa1e1fa55184aae7d104268a8",
+    "7": "a85b477dc7f7ed6f8a54116e88118bef058d1e00a7d890d04308a43b29a70384",
+    "8": "78ea416876508f3ab0a1e8088230e05fe51ce7a70c4a01a6be3bf9978d879cb8",
+    "9": "9679c1a7b0727e95d2cc7e459f66297019b6cc238f6fd1d6c1d3a059f4bab20d",
+    "10": "ca0f356bd6afb40f4fb811faf89652b79b7902074f15f77cccc52efd993779d3",
+    "11": "2df4c04ab7cca6893ba42e320952d797f88cf9810a7a002b45c89747b0efd9f1",
+    "12": "dbd0655268f26b9c7eb68f078e8cf423f18b91a01d1f598cbaf7bb0a498a5460"
+  },
+  "preview_timeout_seconds": 1800,
+  "hypothesis": "removing the small reader may reduce harmful rank perturbations",
+  "evidence_of_gain": null,
+  "training": false,
+  "status": "built_not_submitted"
+}

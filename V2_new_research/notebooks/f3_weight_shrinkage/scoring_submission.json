@@ -1,0 +1,12 @@
+{
+  "competition": "rsna-knee-abnormality-detection",
+  "kernel": "aymenslimani/rsna-knee-f3-weight-shrinkage",
+  "version": 1,
+  "output_file": "submission.csv",
+  "submission_ref": 57451681,
+  "submitted_at_utc": "2026-10-20 19:58:37.907000",
+  "verified_status": "PENDING",
+  "public_score": null,
+  "authorization": "User explicitly instructed continue and submit after runtime uncertainty was disclosed.",
+  "runtime_gate": "Not independently verified; submission acceptance does not establish full-run success."
+}

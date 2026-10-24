@@ -1,0 +1,10 @@
+{
+  "parent": "outputs/f2_dino_geometry/20261020T113047Z",
+  "arms": ["ranking", "series_dropout"],
+  "ranking_weight": 0.25,
+  "series_drop_probability": 0.2,
+  "cpu_threads_per_worker": 2,
+  "hard_wall_seconds": 900,
+  "bootstrap_draws": 500,
+  "seed": 0
+}

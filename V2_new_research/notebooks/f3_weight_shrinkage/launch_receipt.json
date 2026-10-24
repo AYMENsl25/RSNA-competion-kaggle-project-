@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-20T19:36:53.776353+00:00",
+  "kernel": "aymenslimani/rsna-knee-f3-weight-shrinkage",
+  "version": 1,
+  "status": "RUNNING",
+  "timeout_seconds": 1800,
+  "scored_submission": false,
+  "remaining_gate": "Full hidden-test runtime and quota feasibility not established",
+  "local_checks": "PASS analytical blend delta and fail-closed coverage"
+}
