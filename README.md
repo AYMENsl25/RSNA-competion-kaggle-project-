@@ -1,8 +1,51 @@
-# RSNA Knee research workspace
+# RSNA Knee Abnormality Detection: our Kaggle project
 
-- [`V1_previous_research/`](V1_previous_research/README.md) preserves the prior project's source, notebooks, documentation, tests, and previously committed artifacts. Raw datasets and local caches remain outside Git.
-- [`V2_new_research/`](V2_new_research/) is the independent research study, with its own plan, audits, experiment registry, code, and Kaggle notebooks.
+Predict 12 knee MRI findings (ACL, MCL, menisci, OA in 3 compartments, effusion, synovitis, Baker's cyst, contusion, fracture) per study, scored by mean AUC. The competition ran on Kaggle and closed 2026-10-22.
 
-The shared `.tools/` directory contains the Kaggle CLI. `.kaggle/` is reserved for local credentials. Training data, review packets, generated outputs, and model weights stay local or in private Kaggle assets. The tracked research documents summarize the findings.
+## Final results
 
-Start with the [V2 study status](V2_new_research/README.md), [source guide](V2_new_research/src/README.md), and [notebook guide](V2_new_research/notebooks/README.md). The [October 16 publication record](V2_new_research/research/PUBLICATION_2026-10-16.md) explains the snapshot boundaries and verification. N4 remains local while it is in progress.
+| What | Public LB | Private LB |
+|---|---:|---:|
+| **Our best own model: Ens4** (4 CNNs we trained, competition data only) | 0.857 | 0.837 |
+| Fork of the public 0.958 stack (F0) | 0.958 | 0.942 |
+| Top private score | | 0.960 |
+
+No medal. The gap to the top came mostly from **training labels**, not model architecture. See the lessons below.
+
+## Start here
+
+| Document | What it covers |
+|---|---|
+| [docs/RESULTS.md](docs/RESULTS.md) | Every submission with public and private scores, every development experiment, gold-58 checks |
+| [docs/OUR_BEST_MODEL.md](docs/OUR_BEST_MODEL.md) | Deep dive on Ens4: preprocessing, sampling, model, labels, training, ensembling, per-finding AUC, why it fell short |
+| [docs/LESSONS_FROM_TOP_SOLUTIONS.md](docs/LESSONS_FROM_TOP_SOLUTIONS.md) | Reusable playbook distilled from the 2nd, 5th, 7th and 8th place solutions |
+| [V2_new_research/research/POSTMORTEM_21ST_22ND_2026-10-24.md](V2_new_research/research/POSTMORTEM_21ST_22ND_2026-10-24.md) | Comparison with the 21st and 22nd place solutions |
+
+## Repository layout
+
+```
+docs/                      Final write-ups (start here)
+V2_new_research/           The main study (Oct 9-24)
+  research/                Plans, decision records, results notes, external evidence
+  src/                     Preprocessing (canon.py), models, training (train_v3.py), audits, runners
+  notebooks/               Kaggle kernels: cache builds, training, offline inference, F0-F7 submissions
+  experiments/             registry.csv + completed-run histories with paired comparisons
+  tests/                   Unit tests for data, models and submission builders
+  scripts/                 F3-F7 submission builders and preview checks
+V1_previous_research/      Archive of the first project attempt
+```
+
+## Timeline
+
+| Dates | Phase | Outcome |
+|---|---|---|
+| Sep - Oct 8 | V1: first attempt | Archived in `V1_previous_research/` |
+| Oct 9-12 | V2: audits, frozen split, baselines (M00, P00, E01) | First submission 0.769 |
+| Oct 13-15 | V3: canonical cache, labels v3, ensembles | Ens4 **0.857** public / 0.837 private |
+| Oct 15-17 | N-series: attention heads, 6 slots, native res, LR, seed replication | Weak-label gains; none submitted |
+| Oct 17-22 | Public-weights track: F0 fork, K/T/S fine-tunes and students, F-variants | F0 0.958 / 0.942; no variant beat it |
+| Oct 24-25 | Postmortem and top-solution review | `docs/` |
+
+## Data and weights
+
+Competition data, MRI caches, report text, label tables and checkpoints are **not** in Git, per the competition rules. They stay local or in private Kaggle datasets. `.kaggle/` holds local credentials and is ignored.
