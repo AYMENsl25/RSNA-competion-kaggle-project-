@@ -1,0 +1,188 @@
+{
+  "report_version": "1.0",
+  "metric": "macro ROC-AUC",
+  "notes": [
+    "Panels use different cohorts/references; compare within matched panels only.",
+    "Intervals condition on fitted runs, and are not seed-variance estimates.",
+    "Leaderboard scores have three-decimal display precision."
+  ],
+  "early_proxy": [
+    {
+      "id": "M00",
+      "auc": 0.739719,
+      "hours": 2.62,
+      "reserved_mib": 760
+    },
+    {
+      "id": "P00",
+      "auc": 0.801735,
+      "hours": 2.39,
+      "reserved_mib": 760
+    },
+    {
+      "id": "D01",
+      "auc": 0.793934,
+      "hours": 3.24,
+      "reserved_mib": 982
+    },
+    {
+      "id": "S01",
+      "auc": 0.792733,
+      "hours": 4.09,
+      "reserved_mib": 760
+    }
+  ],
+  "paired_effects": [
+    {
+      "label": "Attention vs max: seed 0",
+      "delta": 0.012315604362515775,
+      "ci95": [
+        0.007049994130332545,
+        0.018267116531584696
+      ],
+      "scope": "proxy; fixed endpoint; one fitted run"
+    },
+    {
+      "label": "Attention vs max: seed 1",
+      "delta": -0.002003907671040528,
+      "ci95": [
+        -0.006823397883173309,
+        0.0029055211605550496
+      ],
+      "scope": "proxy; fixed endpoint; one fitted run"
+    },
+    {
+      "label": "N3b context vs N3a",
+      "delta": -0.007377188825231307,
+      "ci95": [
+        -0.013299745169874116,
+        -0.002236387499874817
+      ],
+      "scope": "proxy; fixed endpoint; one fitted run"
+    },
+    {
+      "label": "F2 geometry: B minus C",
+      "delta": 0.0014005306251464456,
+      "ci95": [
+        7.876403620294686e-05,
+        0.0026330850608254795
+      ],
+      "scope": "proxy; selected endpoint; post hoc"
+    },
+    {
+      "label": "F4 ranking vs B",
+      "delta": 0.008935297129829878,
+      "ci95": [
+        0.006851165570352152,
+        0.011496056954318823
+      ],
+      "scope": "proxy; selected endpoint; exploratory"
+    },
+    {
+      "label": "F4 series dropout vs B",
+      "delta": -0.0030224129911209374,
+      "ci95": [
+        -0.006301464696634854,
+        -9.287478497116755e-05
+      ],
+      "scope": "proxy; selected endpoint; exploratory"
+    }
+  ],
+  "frozen_feature_proxy": [
+    {
+      "id": "A",
+      "auc": 0.780320883838896
+    },
+    {
+      "id": "B",
+      "auc": 0.7988737822304848
+    },
+    {
+      "id": "C",
+      "auc": 0.7974732516053383
+    },
+    {
+      "id": "ranking",
+      "auc": 0.8078090793603147
+    },
+    {
+      "id": "series_dropout",
+      "auc": 0.7958513692393638
+    }
+  ],
+  "leaderboard": [
+    {
+      "id": "E01",
+      "public_auc": 0.769,
+      "private_auc": 0.735,
+      "track": "independent"
+    },
+    {
+      "id": "E1",
+      "public_auc": 0.807,
+      "private_auc": 0.788,
+      "track": "independent"
+    },
+    {
+      "id": "E4+E5",
+      "public_auc": 0.841,
+      "private_auc": 0.821,
+      "track": "independent"
+    },
+    {
+      "id": "Ens3",
+      "public_auc": 0.848,
+      "private_auc": 0.827,
+      "track": "independent"
+    },
+    {
+      "id": "Ens4",
+      "public_auc": 0.857,
+      "private_auc": 0.837,
+      "track": "independent"
+    },
+    {
+      "id": "F0",
+      "public_auc": 0.958,
+      "private_auc": 0.942,
+      "track": "public_stack_reproduction"
+    },
+    {
+      "id": "F1",
+      "public_auc": 0.954,
+      "private_auc": 0.938,
+      "track": "public_stack_plus_own_student"
+    },
+    {
+      "id": "F3",
+      "public_auc": 0.957,
+      "private_auc": 0.942,
+      "track": "public_stack_variant"
+    },
+    {
+      "id": "F5",
+      "public_auc": 0.958,
+      "private_auc": 0.942,
+      "track": "public_stack_variant"
+    },
+    {
+      "id": "F6",
+      "public_auc": 0.958,
+      "private_auc": 0.942,
+      "track": "public_stack_variant"
+    },
+    {
+      "id": "F7",
+      "public_auc": 0.958,
+      "private_auc": 0.942,
+      "track": "public_stack_variant"
+    }
+  ],
+  "costs": {
+    "f2_extraction_seconds": 443.25,
+    "f2_main_seconds": 512.39,
+    "f2_C_cpu_seconds": 50.78,
+    "f4_parallel_cpu_seconds": 84.45,
+    "f2_f4_kaggle_gpu_hours": 0
+  }
+}

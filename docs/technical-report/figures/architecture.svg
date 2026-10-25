@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="495" height="264" preserveAspectRatio="xMinYMin meet" viewBox="0 0 495 264" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="495" height="264"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-264)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="30.740499999999997" y="245" style="font-family: Helvetica-Bold; font-size: 9px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,490) scale(1,-1)">Independent MRI reader</text>
+			<rect x="15" y="204" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="41.2868" y="215" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,430) scale(1,-1)">DICOM geometry + cache</text>
+			<path d="M 83,204 L 83,193 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="15" y="164" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="45.7904" y="175" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,350) scale(1,-1)">Adjacent-slice windows</text>
+			<path d="M 83,164 L 83,153 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="15" y="124" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="44.188399999999994" y="135" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,270) scale(1,-1)">ResNet18 / ConvNeXt-T</text>
+			<path d="M 83,124 L 83,113 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="15" y="84" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="47.7812" y="95" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,190) scale(1,-1)">Max / finding attention</text>
+			<path d="M 83,84 L 83,73 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="15" y="44" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="41.578399999999995" y="55" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,110) scale(1,-1)">12 logits; Ens4 rank blend</text>
+			<text x="202.495" y="245" style="font-family: Helvetica-Bold; font-size: 9px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,490) scale(1,-1)">Frozen-feature study</text>
+			<rect x="180" y="204" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="209.1884" y="215" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,430) scale(1,-1)">Canonical six-slot cache</text>
+			<path d="M 248,204 L 248,193 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="180" y="164" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="208.98680000000002" y="175" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,350) scale(1,-1)">Frozen DINOv2 features</text>
+			<path d="M 248,164 L 248,153 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="180" y="124" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="205.682" y="135" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,270) scale(1,-1)">Projection + series context</text>
+			<path d="M 248,124 L 248,113 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="180" y="84" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="202.676" y="95" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,190) scale(1,-1)">Geometry + finding attention</text>
+			<path d="M 248,84 L 248,73 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="180" y="44" width="136" height="29" rx="4" ry="4" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="206.3804" y="55" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,110) scale(1,-1)">12 logits; proxy evaluation</text>
+			<text x="370.7395" y="245" style="font-family: Helvetica-Bold; font-size: 9px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,490) scale(1,-1)">Public-weight track</text>
+			<rect x="345" y="204" width="136" height="29" rx="4" ry="4" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="368.9792" y="215" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,430) scale(1,-1)">Released knee checkpoints</text>
+			<path d="M 413,204 L 413,193 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="345" y="164" width="136" height="29" rx="4" ry="4" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="377.4788" y="175" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,350) scale(1,-1)">Raptor 384 / 224 + R6</text>
+			<path d="M 413,164 L 413,153 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="345" y="124" width="136" height="29" rx="4" ry="4" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="376.5932" y="135" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,270) scale(1,-1)">Upstream small reader</text>
+			<path d="M 413,124 L 413,113 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="345" y="84" width="136" height="29" rx="4" ry="4" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="375.9848" y="95" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,190) scale(1,-1)">Original / altered fusion</text>
+			<path d="M 413,84 L 413,73 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7;"/>
+			<rect x="345" y="44" width="136" height="29" rx="4" ry="4" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="371.78" y="55" style="font-family: Helvetica; font-size: 7.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,110) scale(1,-1)">Separate score attribution</text>
+			<text x="142.236" y="8" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,16) scale(1,-1)">Separate pipelines and endpoints; schematic, not patient imagery.</text>
+		</g>
+	</g>
+</svg>

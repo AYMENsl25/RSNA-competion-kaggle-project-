@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="495" height="246" preserveAspectRatio="xMinYMin meet" viewBox="0 0 495 246" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="495" height="246"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-246)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 225,42 L 225,223 Z" style="stroke: rgb(85%,89%,91%); stroke-linecap: butt; stroke-width: 0.6;"/>
+			<text x="216.668" y="25" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,50) scale(1,-1)">-0.02</text>
+			<path d="M 274,42 L 274,223 Z" style="stroke: rgb(85%,89%,91%); stroke-linecap: butt; stroke-width: 0.6;"/>
+			<text x="265.668" y="25" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,50) scale(1,-1)">-0.01</text>
+			<path d="M 323,42 L 323,223 Z" style="stroke: rgb(85%,89%,91%); stroke-linecap: butt; stroke-width: 0.6;"/>
+			<text x="313.744" y="25" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,50) scale(1,-1)">+0.00</text>
+			<path d="M 372,42 L 372,223 Z" style="stroke: rgb(85%,89%,91%); stroke-linecap: butt; stroke-width: 0.6;"/>
+			<text x="362.744" y="25" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,50) scale(1,-1)">+0.01</text>
+			<path d="M 421,42 L 421,223 Z" style="stroke: rgb(85%,89%,91%); stroke-linecap: butt; stroke-width: 0.6;"/>
+			<text x="411.744" y="25" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,50) scale(1,-1)">+0.02</text>
+			<path d="M 470,42 L 470,223 Z" style="stroke: rgb(85%,89%,91%); stroke-linecap: butt; stroke-width: 0.6;"/>
+			<text x="460.744" y="25" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,50) scale(1,-1)">+0.03</text>
+			<path d="M 323,42 L 323,223 Z" style="stroke: rgb(32%,40%,45%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="8" y="205" style="font-family: Times-Roman; font-size: 8.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,410) scale(1,-1)">Attention vs max: seed 0</text>
+			<path d="M 357.544971,208 L 412.508871,208 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 357.544971,205 L 357.544971,211 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 412.508871,205 L 412.508871,211 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1;"/>
+			<circle cx="383.3464613763273" cy="208" r="3" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1; fill: rgb(14%,35%,50%); fill-rule: evenodd;"/>
+			<text x="8" y="176" style="font-family: Times-Roman; font-size: 8.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,352) scale(1,-1)">Attention vs max: seed 1</text>
+			<path d="M 289.56535,179 L 337.237054,179 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 289.56535,176 L 289.56535,182 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 337.237054,176 L 337.237054,182 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1;"/>
+			<circle cx="313.1808524119014" cy="179" r="3" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,31%,15%); fill-rule: evenodd;"/>
+			<text x="8" y="147" style="font-family: Times-Roman; font-size: 8.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,294) scale(1,-1)">N3b context vs N3a</text>
+			<path d="M 257.831249,150 L 312.041701,150 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 257.831249,147 L 257.831249,153 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 312.041701,147 L 312.041701,153 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1;"/>
+			<circle cx="286.8517747563666" cy="150" r="3" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,31%,15%); fill-rule: evenodd;"/>
+			<text x="8" y="118" style="font-family: Times-Roman; font-size: 8.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,236) scale(1,-1)">F2 geometry: B minus C</text>
+			<path d="M 323.385944,121 L 335.902117,121 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 323.385944,118 L 323.385944,124 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 335.902117,118 L 335.902117,124 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1;"/>
+			<circle cx="329.86260006321754" cy="121" r="3" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1; fill: rgb(14%,35%,50%); fill-rule: evenodd;"/>
+			<text x="8" y="89" style="font-family: Times-Roman; font-size: 8.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,178) scale(1,-1)">F4 ranking vs B</text>
+			<path d="M 356.570711,92 L 379.330679,92 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 356.570711,89 L 356.570711,95 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 379.330679,89 L 379.330679,95 Z" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1;"/>
+			<circle cx="366.78295593616645" cy="92" r="3" style="stroke: rgb(14%,35%,50%); stroke-linecap: butt; stroke-width: 1; fill: rgb(14%,35%,50%); fill-rule: evenodd;"/>
+			<text x="8" y="60" style="font-family: Times-Roman; font-size: 8.2px;fill: rgb(9%,16%,22%); stroke:none;" transform="translate(0,120) scale(1,-1)">F4 series dropout vs B</text>
+			<path d="M 292.122823,63 L 322.544914,63 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 292.122823,60 L 292.122823,66 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 322.544914,60 L 322.544914,66 Z" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1;"/>
+			<circle cx="308.1901763435074" cy="63" r="3" style="stroke: rgb(65%,31%,15%); stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,31%,15%); fill-rule: evenodd;"/>
+			<text x="273.56" y="8" style="font-family: Times-Roman; font-size: 8px;fill: rgb(32%,40%,45%); stroke:none;" transform="translate(0,16) scale(1,-1)">Candidate minus its own control (proxy AUC)</text>
+		</g>
+	</g>
+</svg>
