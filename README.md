@@ -16,6 +16,7 @@ No medal. The technical report examines supervision, image coverage, model selec
 
 | Document | What it covers |
 |---|---|
+| [Illustrated Kaggle-style write-up](docs/kaggle-writeup/WRITEUP.md) | Visual overview, architecture, result charts and lessons learned |
 | [Technical report](docs/technical-report/REPORT.md) · [PDF](docs/technical-report/rsna-knee-technical-report.pdf) | Architecture, controlled ablations, replication, final scores and reproducibility |
 | [docs/RESULTS.md](docs/RESULTS.md) | Every submission with public and private scores, every development experiment, gold-58 checks |
 | [docs/OUR_BEST_MODEL.md](docs/OUR_BEST_MODEL.md) | Deep dive on Ens4: preprocessing, sampling, model, labels, training, ensembling, per-finding AUC, why it fell short |
