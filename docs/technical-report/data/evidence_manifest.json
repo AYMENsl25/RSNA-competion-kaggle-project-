@@ -1,0 +1,155 @@
+{
+  "audit_date": "2026-10-25",
+  "scope": "Source and existing aggregate-artifact audit; no retraining, label access, checkpoint load or prediction recomputation",
+  "publication_boundary": "Relative file references and hashes only; no source patient data or row-level predictions included.",
+  "f2_source_parity_at_audit": {
+    "notebooks\\f2_dino_geometry\\run.py": true,
+    "src\\f2_data.py": true,
+    "src\\f2_model.py": true
+  },
+  "files": [
+    {
+      "path": "V2_new_research/research/M00_V1_RESULTS.md",
+      "sha256": "e1f024881767ba05977d71cb4fea4631bffd2ec68600a4da4a18bbad8fbb0f29",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/M01_V1_RESULTS_AND_DECISION.md",
+      "sha256": "cdc980cc42b8f1561f663876f38fba3337fb286b8acb515d9e54b43625b2ec78",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/P00_P01A_FULL_RESULTS_AND_NEXT.md",
+      "sha256": "336caf56c4972a8cc83a5e2c2fd32c6e1282369feb530b5856ae3a66da9d3d90",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/D01_S01_RESULTS_AND_TWO_PLANS.md",
+      "sha256": "24365d36b1553cef1279636bd18e1fea6f9c5093d676bbb58e38b4f733fd74f6",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/N1_RESULTS_AND_N3A_DECISION.md",
+      "sha256": "df6d4a74b06fb0542a3f7c0643b65d92b949283d7731e8f3a5200263ffad17fd",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/N6_RESULTS.md",
+      "sha256": "9cc8702b321833db0e83163ecf117997d4bf8b2a5a61c7a307492268522bca41",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/K1_F0_PUBLIC_WEIGHTS_TRACK.md",
+      "sha256": "9d78e229c126db6fa892ee406586a3259ac51adbe0c39740a663ac542350daf4",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/F2_LOCAL_DINO_RESULTS_2026-10-20.md",
+      "sha256": "4b7595cdf829197b2e3e38d28fc742fb4ac5ca415a352bfd223d76d71130b346",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/F4_CPU_TRIALS_2026-10-21.md",
+      "sha256": "f1826b68244a10c808f831147281433cd7482d32992f59f68bb7ad3f212e2768",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/research/POSTMORTEM_21ST_22ND_2026-10-24.md",
+      "sha256": "cbea8293b1fc55c73bda791ccd01e13a8ad56935c5e442955b4aeba8991049a1",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/src/m00_model.py",
+      "sha256": "e8410ff5ebcfcf2036c5da18538fc194fe6db24eb88f274981bfba9de3ed531e",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/src/v3_model.py",
+      "sha256": "728df1b65407616f1c8a973d8e7ddf9f1a1224eac4bf185dde0852448dc2fe39",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/src/f2_model.py",
+      "sha256": "b3910366d232e8953ea1de912a44a145d6d2de5fa8a35b9ee7444bcc8a71083b",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/src/f2_data.py",
+      "sha256": "7105f6251aa725084f170041ff92e85626d9c7d8c8ded4828bc6f799064c7b74",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/n3b_context/vs_n3a_public.json",
+      "sha256": "7e74efac8ad7ec00bab58960f150ac1ef226de51505013eb125bd3e67f8110b9",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/n6_kaggle_run/local_verified_seed1_public.json",
+      "sha256": "baa6d8978dbb72ed50304a6891aa547d19f50811c9384190ee968a18f8157c95",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/n6_kaggle_run/seed0_attention_vs_max_public.json",
+      "sha256": "4bfc59caefdbd507143bbe75eff7094dfa8be4e5328d13e069ee37e65e8249d9",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/f2_dino_geometry/20261020T113047Z/f2_comparison.json",
+      "sha256": "b88fdd9a60665657162113c3d9a476acf38e57c91de5a5289d920bfbc7ba3e93",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/f2_dino_geometry/20261020T113047Z/geometry_ablation/comparison.json",
+      "sha256": "4f4473ada5e377fac48fbcfbcb21cad1568379380e927c16adc4a26983a0825a",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/f2_dino_geometry/20261020T113047Z/artifact_verification.json",
+      "sha256": "e73b49a7c99f1ae24f2b8bc10ba9bd72e162e287f35889392791a2f462e8f9c7",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/f4_cpu_trials/20261021T151219Z/ranking/result.json",
+      "sha256": "593003d48ef23f7187a9b628ac49efed63499b28d525f51acab0979d04d6e74e",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    },
+    {
+      "path": "V2_new_research/outputs/f4_cpu_trials/20261021T151219Z/series_dropout/result.json",
+      "sha256": "857e6c32cae81ba7031fd390d22f88162b7c532eb4f1ef51a8cdbd6bf5e20405",
+      "exists_at_audit": true,
+      "availability": "repository source or local research artifact; not all redistributed"
+    }
+  ],
+  "remote_document_sources": [
+    {
+      "path": "docs/OUR_BEST_MODEL.md",
+      "git_blob_sha": "ee72242b044d24a4d52e029b792e81feaae4bb6c"
+    },
+    {
+      "path": "docs/RESULTS.md",
+      "git_blob_sha": "f42d54b68fe69ad7e12cb621d82fe54bb161632a"
+    }
+  ],
+  "remote_source_commit": "b3389af4c103ffb622eba58a77b1e5d3a69b20ad"
+}

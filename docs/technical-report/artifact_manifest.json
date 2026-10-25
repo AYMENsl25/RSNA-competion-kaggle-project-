@@ -1,0 +1,19 @@
+{
+  "report_version": "1.0",
+  "report_date": "2026-10-25",
+  "reportlab_version": "4.4.9",
+  "invariant_pdf": true,
+  "reproduction_scope": "report and figures from aggregate data; no training reproduction",
+  "files": {
+    "BUILD.md": "de535873c08b09506cf9251c533bc6335ae248f467d485786ad3a0f971c43fa0",
+    "build_report.py": "3af77e72e14ee9aff056a1af8f19d9f94323fb5d69cd8881dfea2a8a22f777e7",
+    "data/aggregate_results.json": "f466365297cee49a570dd40d0d6b069b29af90d3da377d96268edfd5c8056049",
+    "data/evidence_manifest.json": "85802e2184e743c3f5f3bcfbe2319573c5d21247906f7a285b45df66ea57519e",
+    "figures/architecture.svg": "bd16dd770650a308415079105d4521ed8c3b0643ed7928a3bc61ba329c32cbea",
+    "figures/paired-effects.svg": "d1f51c23b582ef5112236fe9fd60c5faf29614295ebceaa438d01bbf464e9c9f",
+    "README.md": "45c499d32d2cd7141b75e9583e570d042902494ab769c577c8dcc0c8d6517980",
+    "REPORT.md": "04be9f9e93a0632d13c95de997980df310a7403366d4dae118fff3e4afc3377a",
+    "requirements.txt": "d213bf79a7136185b6ed0b5e9d6a75fa7588a4d690282792c5a4a4fcdebf2415",
+    "rsna-knee-technical-report.pdf": "1253ddd02a49e95c809c0922dc5b5f08f96cd0c699bbaac5d08adfb5b20dd13c"
+  }
+}
