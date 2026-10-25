@@ -299,13 +299,13 @@ def main():
     body=render_markdown((HERE/'WRITEUP.md').read_text())
     css='''*{box-sizing:border-box}body{margin:0;background:#f0f4f7;color:#182d3c;font:17px/1.75 system-ui,-apple-system,Segoe UI,sans-serif}article{max-width:1000px;margin:40px auto;padding:44px 60px;background:white;border:1px solid #dce5eb;border-radius:16px}h1{font-size:38px;line-height:1.2;letter-spacing:-1px;margin:12px 0 24px}h2{font-size:27px;line-height:1.35;margin-top:56px;border-top:1px solid #dce5eb;padding-top:25px}h3{font-size:22px;margin-top:35px}a{color:#087d9d}p,li{max-width:78ch}img{display:block;width:100%;height:auto;border-radius:10px}figure{margin:28px -15px}table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:12px 14px;border-bottom:1px solid #dce5eb;text-align:left;vertical-align:top}th{background:#eef4f7}pre{white-space:pre-wrap;padding:20px;background:#f0f5f8;font-size:13px;border-radius:8px}code{font-family:ui-monospace,monospace}footer{margin-top:50px;color:#5a6b78;font-size:13px}.table-wrap{overflow-x:auto}em{color:#596b78}@media(max-width:700px){article{margin:0;padding:24px 20px;border:0;border-radius:0}h1{font-size:30px}h2{font-size:23px}figure{margin:24px -5px}body{font-size:16px}}'''
     page=f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Our RSNA Knee MRI Solution</title><style>{css}</style></head><body><article>{body}<footer>Illustrated project write-up - 25 October 2026. Offline preview; no external scripts or image requests.</footer></article></body></html>'
-    (HERE/'writeup.html').write_text(page,encoding='utf-8')
+    (HERE/'writeup.html').write_text(page,encoding='utf-8',newline='\n')
     manifest={'version':'1.0','date':'2026-10-25','aggregate_source_sha256':hashlib.sha256(DATA.read_bytes()).hexdigest(),
               'scope':'Aggregate-only illustrations and write-up; not uploaded to Kaggle','files':{}}
     for f in sorted(HERE.rglob('*')):
         if f.is_file() and f.name!='manifest.json' and '__pycache__' not in f.parts:
             manifest['files'][f.relative_to(HERE).as_posix()]=hashlib.sha256(f.read_bytes()).hexdigest()
-    (HERE/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    (HERE/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',newline='\n')
     print(json.dumps(validate(),indent=2))
 
 

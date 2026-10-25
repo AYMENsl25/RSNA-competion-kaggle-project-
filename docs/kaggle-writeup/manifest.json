@@ -4,16 +4,17 @@
   "aggregate_source_sha256": "f466365297cee49a570dd40d0d6b069b29af90d3da377d96268edfd5c8056049",
   "scope": "Aggregate-only illustrations and write-up; not uploaded to Kaggle",
   "files": {
+    ".gitattributes": "cff28884a74d828405c58efdf11c648f67356a666795e60629adf7a091fa0874",
     "assets/01-overview.png": "a16bd5d967e2c33a80021a2e6dc41ee8e4b54806e79695a7bb1a8cbfb873a71e",
     "assets/02-pipeline.png": "f0eac3b850289a7a8ade1b5a12e2a7dfc9411d7d14af229dc3e860a231fb888d",
     "assets/03-submission-progress.png": "afeab0e03b70e312f3731cef9791d0966df24bb685264963a189db562fff96b3",
     "assets/04-coverage-and-cost.png": "c014c50a6eb07c81ad67a2c0336792172db7a01bd988d147488498a8841d9bc0",
     "assets/05-attention-replication.png": "a130ddbd316150d815c39ebc317cc16f071efe634310dbc7cf4f98651129fb32",
     "assets/06-frozen-feature-study.png": "c04d6a561b67f719b0267050eafb488cb4358e73598feb08b45bba468161e19b",
-    "build_writeup.py": "727e1fcb744522907fdba32f6a4fef8523a8a2ce012ea60c3bd9a584e00fdc55",
+    "build_writeup.py": "f73e1ae80cd3551323ef3a2cfbf895568d6f4909dc7fadcda0d10ae5893bcff0",
     "KAGGLE_PUBLISHING.md": "2c6265ba214236c6b45f56c02b3a4df15a92d62b6575fb0c529a77253b9d39a2",
     "README.md": "0b59eedbd0be87e271a5d133a17997f90c66e981f0b9c900a6398b8d8b22fc65",
-    "writeup.html": "6ad4de06ea74db3bedc5f48f352200b463798b873d7ff1a56aa88483fc645c69",
+    "writeup.html": "4701d3a20f5f55cda05a977d2685e392ce0bf16dac4d5c47b9d0733685a8b9cf",
     "WRITEUP.md": "2c4b64871c16c9a1f4010cd6e8111774f8b97554c7c445d6b662b33d8bcdd063"
   }
 }
