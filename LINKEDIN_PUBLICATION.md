@@ -25,9 +25,10 @@ The most useful lesson was that a model that was not the strongest on its own co
 The repository includes the code, experiment history, aggregate evidence, and research notes:
 https://github.com/AYMENsl25/RSNA-competion-kaggle-project-
 
-The first image is a real public sagittal knee MRI from Ptrump16 on Wikimedia Commons, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). It is illustrative only and is not from our study cohort. The next image explains the model pipeline and experiment result.
+The MRI panels are real public sagittal knee scans by Ptrump16 on Wikimedia Commons, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). They are illustrative examples, not from our study cohort. The architecture graphic combines the MRI examples, preprocessing, model, and ensemble layers with the measured result. The composite graphic is shared under CC BY-SA 4.0.
 
-![Public illustrative sagittal knee MRI, T1 TSE](https://upload.wikimedia.org/wikipedia/commons/e/e2/Knee_MRI_T1_TSE_Sagittal.jpg)
+![Public sagittal knee MRI, T1 TSE](https://upload.wikimedia.org/wikipedia/commons/e/e2/Knee_MRI_T1_TSE_Sagittal.jpg)
+![Public sagittal knee MRI, PD TSE fat-suppressed](https://upload.wikimedia.org/wikipedia/commons/d/dc/Knee_MRI_PD_TSE_FS_Sagittal.jpg)
 
 ![RSNA knee MRI architecture and experimental result](assets/linkedin/architecture-results.svg)
 
@@ -35,13 +36,13 @@ The first image is a real public sagittal knee MRI from Ptrump16 on Wikimedia Co
 
 ## Image alt text
 
-Pipeline diagram: multi-series knee MRI DICOM inputs are audited and canonicalized, converted into three-slice windows, encoded with a ConvNeXt-Tiny image model, pooled by a finding-specific attention head into 12 predictions, and combined in a predeclared rank ensemble. The ensemble reached 0.8918 macro-AUC on a fixed weak-label development set. The backbone used ImageNet initialization; no open-source RSNA/knee checkpoint produced this result.
+Pipeline diagram includes two illustrative public sagittal MRI sequence examples (T1 TSE and PD TSE fat-suppressed; Ptrump16, Wikimedia Commons, CC BY-SA 4.0), followed by audited DICOM preprocessing, ConvNeXt-Tiny image encoding, finding-specific attention for 12 predictions, and a predeclared rank ensemble. The ensemble reached 0.8918 macro-AUC on a fixed weak-label development set. The scans are not from our cohort; the backbone used ImageNet initialization and no open-source RSNA/knee checkpoint produced this result.
 
 ## Suggested post images
 
-1. Public knee MRI example: Ptrump16, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Knee_MRI_T1_TSE_Sagittal.jpg), CC BY-SA 4.0.
+1. Public knee MRI examples: Ptrump16, [T1 TSE](https://commons.wikimedia.org/wiki/File:Knee_MRI_T1_TSE_Sagittal.jpg) and [PD TSE FS](https://commons.wikimedia.org/wiki/File:Knee_MRI_PD_TSE_FS_Sagittal.jpg), Wikimedia Commons, CC BY-SA 4.0.
 2. [Architecture and measured result](assets/linkedin/architecture-results.svg) — a publication-ready layered vector graphic suitable for previewing or exporting to PNG.
-3. The MRI example is not one of our study scans or model inputs. The published repository intentionally excludes patient-level DICOM data and predictions.
+3. The MRI examples are not our study scans or model inputs. The published repository intentionally excludes patient-level DICOM data and predictions.
 
 ## Claim notes
 
