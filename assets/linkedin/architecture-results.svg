@@ -1,58 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">RSNA knee MRI study — architecture and result</title>
-  <desc id="desc">A real sagittal knee MRI from Wikimedia Commons is shown as an illustrative scan, clearly separate from the research cohort. A simple diagram shows audited DICOM preprocessing, ConvNeXt-Tiny encoding, finding-specific attention for 12 predictions, and a rank ensemble reaching 0.8918 macro-AUC on a weak-label development set.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">RSNA knee MRI study — model layers and experiment result</title>
+  <desc id="desc">A restrained research diagram showing multi-series MRI input, audited DICOM preprocessing, ConvNeXt-Tiny image encoding, finding-specific attention for 12 outputs, and a rank ensemble with 0.8918 macro-AUC on a weak-label development set.</desc>
   <style>
-    text{font-family:Arial,Helvetica,sans-serif}.ink{fill:#172b3a}.muted{fill:#5e6d77}.teal{fill:#087f83}.line{stroke:#cbd4d8;stroke-width:2}.card{fill:#fff;stroke:#d4dce0;stroke-width:2}
+    text{font-family:Arial,Helvetica,sans-serif}.ink{fill:#192b38}.muted{fill:#5c6b75}.teal{fill:#087d80}.card{fill:#fff;stroke:#d3dadd;stroke-width:2}.step{fill:#eef2f2}
   </style>
-  <rect width="1600" height="900" fill="#f7f8f7"/>
-  <text x="76" y="76" class="teal" font-size="18" font-weight="700" letter-spacing="2">RSNA KNEE MRI  /  EXPERIMENT SNAPSHOT</text>
-  <text x="76" y="135" class="ink" font-size="42" font-weight="700">From MRI slices to 12 finding scores</text>
-  <text x="76" y="174" class="muted" font-size="21">Our pipeline, experiments and measured development result</text>
+  <rect width="1600" height="900" fill="#f8f9f8"/>
+  <text x="82" y="76" class="teal" font-size="18" font-weight="700" letter-spacing="2">RSNA KNEE MRI  /  EXPERIMENT SNAPSHOT</text>
+  <text x="82" y="139" class="ink" font-size="44" font-weight="700">How we built the 0.8918 result</text>
+  <text x="82" y="180" class="muted" font-size="22">A layered view of the MRI pipeline and our experiment</text>
 
-  <!-- Authentic public MRI image, separated from the model diagram -->
-  <rect x="76" y="218" width="440" height="500" rx="8" fill="#111"/>
-  <image x="76" y="218" width="440" height="500" preserveAspectRatio="xMidYMid slice" xlink:href="https://upload.wikimedia.org/wikipedia/commons/e/e2/Knee_MRI_T1_TSE_Sagittal.jpg"/>
-  <rect x="76" y="658" width="440" height="60" fill="#101820" fill-opacity=".88"/>
-  <text x="96" y="684" fill="#fff" font-size="16" font-weight="700">SAGITTAL KNEE MRI · T1 TSE</text>
-  <text x="96" y="706" fill="#d3dde2" font-size="13">Illustrative public image; not from our study cohort</text>
-
-  <!-- restrained architecture -->
-  <text x="574" y="236" class="ink" font-size="20" font-weight="700">MODEL PIPELINE</text>
-  <line x1="602" y1="288" x2="602" y2="578" stroke="#9baab1" stroke-width="2"/>
+  <!-- Five restrained horizontal layers -->
   <g>
-    <circle cx="602" cy="300" r="7" fill="#087f83"/>
-    <rect x="630" y="268" width="844" height="66" rx="6" class="card"/>
-    <text x="656" y="296" class="ink" font-size="19" font-weight="700">1  DICOM quality and geometry checks</text>
-    <text x="656" y="320" class="muted" font-size="16">Series ordering · orientation · intensity normalization · 3-slice windows</text>
-
-    <circle cx="602" cy="382" r="7" fill="#087f83"/>
-    <rect x="630" y="350" width="844" height="66" rx="6" class="card"/>
-    <text x="656" y="378" class="ink" font-size="19" font-weight="700">2  ConvNeXt-Tiny image encoder</text>
-    <text x="656" y="402" class="muted" font-size="16">ImageNet initialization; no RSNA/knee-trained public checkpoint</text>
-
-    <circle cx="602" cy="464" r="7" fill="#087f83"/>
-    <rect x="630" y="432" width="844" height="66" rx="6" class="card"/>
-    <text x="656" y="460" class="ink" font-size="19" font-weight="700">3  Finding-specific attention</text>
-    <text x="656" y="484" class="muted" font-size="16">Pool image-window evidence into 12 independent finding predictions</text>
-
-    <circle cx="602" cy="546" r="7" fill="#087f83"/>
-    <rect x="630" y="514" width="844" height="66" rx="6" class="card"/>
-    <text x="656" y="542" class="ink" font-size="19" font-weight="700">4  Predeclared rank ensemble</text>
-    <text x="656" y="566" class="muted" font-size="16">Combine complementary experiment runs using fixed validation protocol</text>
+    <rect x="82" y="232" width="278" height="292" rx="8" class="card"/>
+    <rect x="382" y="232" width="278" height="292" rx="8" class="card"/>
+    <rect x="682" y="232" width="278" height="292" rx="8" class="card"/>
+    <rect x="982" y="232" width="278" height="292" rx="8" class="card"/>
+    <rect x="1282" y="232" width="236" height="292" rx="8" class="card"/>
+  </g>
+  <g fill="none" stroke="#9daeb4" stroke-width="2">
+    <path d="M361 378h17m281 0h17m281 0h17m281 0h17"/>
+  </g>
+  <g fill="#087d80">
+    <path d="M374 371l9 7-9 7zM674 371l9 7-9 7zM974 371l9 7-9 7zM1274 371l9 7-9 7z"/>
   </g>
 
-  <!-- result and progression -->
-  <rect x="574" y="616" width="900" height="102" rx="8" fill="#e9f1f0"/>
-  <text x="606" y="656" class="teal" font-size="15" font-weight="700" letter-spacing="1.4">FIXED WEAK-LABEL DEVELOPMENT SET · 885 STUDIES / 843 GROUPS</text>
-  <text x="606" y="701" class="ink" font-size="42" font-weight="700">0.8918</text>
-  <text x="780" y="696" class="muted" font-size="18">macro-AUC · experimental ensemble · not leaderboard</text>
-  <text x="76" y="772" class="muted" font-size="15">EXPERIMENT TRACK</text>
-  <text x="322" y="772" class="ink" font-size="16">N1  0.8868</text>
-  <text x="558" y="772" class="ink" font-size="16">N3a  0.8885</text>
-  <text x="822" y="772" class="teal" font-size="16" font-weight="700">Ensemble  0.8918</text>
+  <!-- input: layered slice cards, a diagram rather than synthetic MRI imagery -->
+  <rect x="125" y="278" width="72" height="92" rx="3" fill="#f4f6f5" stroke="#b7c2c6" stroke-width="2"/>
+  <rect x="139" y="290" width="72" height="92" rx="3" fill="#e5eae9" stroke="#9daeb4" stroke-width="2"/>
+  <rect x="153" y="302" width="72" height="92" rx="3" fill="#d7dfde" stroke="#74878e" stroke-width="2"/>
+  <text x="245" y="324" class="ink" font-size="16" font-weight="700">MULTI-SERIES</text>
+  <text x="245" y="351" class="muted" font-size="15">Sagittal</text>
+  <text x="245" y="375" class="muted" font-size="15">Coronal</text>
+  <text x="245" y="399" class="muted" font-size="15">Axial</text>
+  <text x="110" y="454" class="ink" font-size="20" font-weight="700">1  MRI DICOM inputs</text>
+  <text x="110" y="485" class="muted" font-size="16">Multiple series / planes</text>
 
-  <line x1="76" y1="809" x2="1524" y2="809" class="line"/>
-  <text x="76" y="842" class="muted" font-size="14">Development metric; not clinical performance or private-test evidence.</text>
-  <text x="1524" y="842" text-anchor="end" class="muted" font-size="13">MRI: Ptrump16 / Wikimedia Commons · CC BY-SA 4.0 · cropped for layout</text>
+  <!-- preprocessing -->
+  <g transform="translate(420 286)" fill="none" stroke="#087d80" stroke-width="3">
+    <path d="M0 12h54M0 30h54M0 48h54"/><circle cx="16" cy="12" r="6" fill="#fff"/><circle cx="39" cy="30" r="6" fill="#fff"/><circle cx="25" cy="48" r="6" fill="#fff"/>
+  </g>
+  <text x="410" y="372" class="ink" font-size="20" font-weight="700">2  Preprocessing</text>
+  <text x="410" y="407" class="muted" font-size="16">Order · orientation</text>
+  <text x="410" y="432" class="muted" font-size="16">Intensity · 3-slice windows</text>
+  <text x="410" y="485" class="teal" font-size="15" font-weight="700">AUDITED INPUT PIPELINE</text>
+
+  <!-- encoder -->
+  <g transform="translate(720 282)">
+    <rect x="0" y="0" width="44" height="78" rx="4" fill="#d9e3e2" stroke="#97aaa9"/>
+    <rect x="55" y="10" width="44" height="68" rx="4" fill="#c8d9d7" stroke="#839d9b"/>
+    <rect x="110" y="20" width="44" height="58" rx="4" fill="#b6cecb" stroke="#6c8b88"/>
+    <path d="M10 16h24M10 29h24M10 42h24M65 25h24M65 38h24M65 51h24M120 35h24M120 48h24M120 61h24" stroke="#fff" stroke-width="3"/>
+  </g>
+  <text x="710" y="392" class="ink" font-size="20" font-weight="700">3  Image encoder</text>
+  <text x="710" y="426" class="muted" font-size="16">ConvNeXt-Tiny</text>
+  <text x="710" y="451" class="muted" font-size="16">ImageNet initialization</text>
+  <text x="710" y="485" class="teal" font-size="14" font-weight="700">NO KNEE-TRAINED PUBLIC WEIGHTS</text>
+
+  <!-- attention -->
+  <g transform="translate(1018 291)" fill="none" stroke="#82979d" stroke-width="2">
+    <path d="M22 12L68 32M22 32L68 32M22 52L68 32M68 32L116 12M68 32L116 32M68 32L116 52"/>
+  </g>
+  <g fill="#087d80"><circle cx="1040" cy="303" r="8"/><circle cx="1040" cy="323" r="8"/><circle cx="1040" cy="343" r="8"/><circle cx="1086" cy="323" r="10"/><circle cx="1134" cy="303" r="8"/><circle cx="1134" cy="323" r="8"/><circle cx="1134" cy="343" r="8"/></g>
+  <text x="1010" y="392" class="ink" font-size="20" font-weight="700">4  Attention head</text>
+  <text x="1010" y="426" class="muted" font-size="16">Finding-specific pooling</text>
+  <text x="1010" y="451" class="muted" font-size="16">12 independent outputs</text>
+  <text x="1010" y="485" class="teal" font-size="15" font-weight="700">12 FINDING SCORES</text>
+
+  <!-- ensemble -->
+  <g transform="translate(1310 291)">
+    <rect x="0" y="0" width="174" height="20" rx="3" fill="#e5eae9"/>
+    <rect x="14" y="31" width="160" height="20" rx="3" fill="#d6e1df"/>
+    <rect x="28" y="62" width="146" height="20" rx="3" fill="#c5d7d4"/>
+  </g>
+  <text x="1310" y="392" class="ink" font-size="20" font-weight="700">5  Rank ensemble</text>
+  <text x="1310" y="426" class="muted" font-size="15">Predeclared member</text>
+  <text x="1310" y="449" class="muted" font-size="15">combination</text>
+  <text x="1310" y="485" class="teal" font-size="15" font-weight="700">EXPERIMENTAL RESULT</text>
+
+  <!-- Result strip -->
+  <rect x="82" y="575" width="1436" height="202" rx="8" fill="#edf2f1"/>
+  <text x="118" y="621" class="teal" font-size="16" font-weight="700" letter-spacing="1.5">FIXED WEAK-LABEL DEVELOPMENT SET · 885 STUDIES / 843 GROUPS</text>
+  <text x="118" y="712" class="ink" font-size="78" font-weight="700">0.8918</text>
+  <text x="125" y="750" class="muted" font-size="20">macro-AUC</text>
+  <line x1="635" y1="623" x2="635" y2="745" stroke="#c5d0d1" stroke-width="2"/>
+  <text x="690" y="665" class="ink" font-size="23" font-weight="700">Our experiment blend</text>
+  <text x="690" y="703" class="muted" font-size="18">N1  0.8868</text>
+  <text x="866" y="703" class="muted" font-size="18">N3a  0.8885</text>
+  <text x="1064" y="703" class="teal" font-size="18" font-weight="700">Ensemble  0.8918</text>
+  <text x="690" y="744" class="muted" font-size="17">Development result, not a leaderboard or clinical score</text>
+  <text x="82" y="836" class="muted" font-size="16">Layered schematic; the separate public MRI example appears in the LinkedIn post draft.</text>
+  <text x="1518" y="836" text-anchor="end" class="muted" font-size="16">Code and experiment evidence on GitHub</text>
 </svg>
 
