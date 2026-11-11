@@ -25,7 +25,7 @@ The most useful lesson was that a model that was not the strongest on its own co
 The repository includes the code, experiment history, aggregate evidence, and research notes:
 https://github.com/AYMENsl25/RSNA-competion-kaggle-project-
 
-Architecture and result visual: `assets/linkedin/architecture-results.svg`
+Architecture and result visual: `assets/linkedin/architecture-results.svg`. The figure includes a public illustrative sagittal knee MRI from Ptrump16 on Wikimedia Commons under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). It is not from our study cohort; the crop is noted in the graphic.
 
 ![RSNA knee MRI architecture and experimental result](assets/linkedin/architecture-results.svg)
 
@@ -38,7 +38,7 @@ Pipeline diagram: multi-series knee MRI DICOM inputs are audited and canonicaliz
 ## Suggested post images
 
 1. [Architecture and measured result](assets/linkedin/architecture-results.svg) — a publication-ready vector graphic suitable for previewing or exporting to PNG.
-2. For MRI examples, use only de-identified, publication-approved DICOM-derived images. The published repository intentionally excludes patient-level data and predictions; there are no verified example scans in this publication bundle.
+2. The included MRI is a separately sourced public example, not one of our study scans or model inputs. The published repository intentionally excludes patient-level DICOM data and predictions.
 
 ## Claim notes
 
